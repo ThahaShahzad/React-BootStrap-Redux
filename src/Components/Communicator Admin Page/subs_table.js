@@ -75,7 +75,7 @@ function SubsTable({ comm_id }) {
               type='button'
               className='link-button'
               onClick={() => {
-                setEndpoint_id(endpoint_s_data[index].id)
+                setEndpoint_id(Number(endpoint_s_data[index].id))
                 setenpointModalShow(true)
               }}>
               {endpoint_s_data ? endpoint_s_data[index].name : 'N/A'}

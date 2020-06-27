@@ -1,13 +1,14 @@
 import React from 'react'
 import { ListGroup } from 'react-bootstrap'
 
-function MyList({ data }) {
+function MyList({ data, label_style, value_style }) {
   return (
     <>
       <ListGroup className='text-left'>
         {data.map((val, index) => (
-          <ListGroup.Item key={index} style={{ fontWeight: 'bold' }}>
-            {val.label}: {val.Value}
+          <ListGroup.Item key={index}>
+            <span style={label_style}>{val.label} : </span>
+            <span style={value_style}>{val.value}</span>
           </ListGroup.Item>
         ))}
       </ListGroup>

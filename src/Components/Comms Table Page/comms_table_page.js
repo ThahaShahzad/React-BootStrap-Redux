@@ -85,7 +85,7 @@ function CommsTablePage() {
       serial_number: val.serial_number,
       identifiers: val.identifiers ? `${val.identifiers[0].name} = ${val.identifiers[0].value}` : '',
       channel_name: val.channel_name,
-      model_name: val.model_name,
+      model_name: val.model_name ? val.model_name : 'N/A',
       reporting_interval_minutes: val.reporting_interval_minutes,
       last_position_timestamp: val.last_position_timestamp.substring(0, 19),
       last_position: `${parseFloat(val.last_position_latitude).toFixed(5)} , ${parseFloat(

@@ -12,33 +12,33 @@ function CommsList({ comm_data, comm_id }) {
   let list_data = comm_data && [
     {
       label: 'Comm ID',
-      Value: (
+      value: (
         <button type='button' className='link-button' onClick={() => setcommsModalShow(true)}>
           {comm_id}
         </button>
       )
     },
-    { label: 'Serial Number', Value: comm_data.serial_number },
+    { label: 'Serial Number', value: comm_data.serial_number },
     {
       label: 'Model',
-      Value: (
+      value: (
         <button type='button' className='link-button' onClick={() => setmodelModalShow(true)}>
-          {comm_data.model_name}
+          {comm_data.model_name ? comm_data.model_name : 'N/A'}
         </button>
       )
     },
     {
       label: 'Channel',
-      Value: (
+      value: (
         <button type='button' className='link-button' onClick={() => setchannelModalShow(true)}>
-          {comm_data.channel_name}
+          {comm_data.channel_name ? comm_data.channel_name : 'N/A'}
         </button>
       )
     },
     { label: 'Reporting Rate', Value: comm_data.reporting_interval_minutes },
     {
       label: 'Last Postion',
-      Value:
+      value:
         comm_data.last_position_latitude && comm_data.last_position_longitude
           ? `${parseFloat(comm_data.last_position_latitude).toFixed(5)} , ${parseFloat(
               comm_data.last_position_longitude
@@ -47,16 +47,18 @@ function CommsList({ comm_data, comm_id }) {
     },
     {
       label: 'Last Timestamp',
-      Value: `${comm_data.last_position_timestamp.substring(0, 19)} (${timeSince(
+      value: `${comm_data.last_position_timestamp.substring(0, 19)} (${timeSince(
         Date.parse(comm_data.last_position_timestamp)
       )} ago) `
     }
   ]
   return (
     <>
-      <MyList data={list_data} />
+      <MyList data={list_data} label_style={{ fontWeight: 'bold' }} />
       <CommsDataModal show={commsmodalShow} hide={() => setcommsModalShow(false)} comm_data={comm_data} />
-      <ModelDataModal show={modelModalShow} hide={() => setmodelModalShow(false)} model_id={comm_data.model_id} />
+      {comm_data.model_name && (
+        <ModelDataModal show={modelModalShow} hide={() => setmodelModalShow(false)} model_id={comm_data.model_id} />
+      )}
       <ChannelDataModal
         show={channelModalShow}
         hide={() => setchannelModalShow(false)}

@@ -8,8 +8,11 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import { useSelector, useDispatch } from 'react-redux'
 import Loader from 'react-loader-spinner'
 import { getModels } from '../../Redux/Models/actions'
+import ModelDataModal from '../Modals/model_data_modal'
 
 function ModelsTablePage() {
+  const [modelModalShow, setmodelModalShow] = React.useState(false)
+  const [model_id, setmodel_id] = React.useState()
   const models_data = useSelector((state) => state.models.data)
   const models_loaded = useSelector((state) => state.models.loaded)
   const models_loading = useSelector((state) => state.models.isloading)
@@ -25,6 +28,11 @@ function ModelsTablePage() {
       dataField: 'model',
       text: 'Model',
       sort: true
+    },
+    {
+      dataField: 'model1',
+      text: 'Model',
+      hidden: true
     },
     {
       dataField: 'manufacturer',
@@ -47,17 +55,22 @@ function ModelsTablePage() {
     models_data.map((val, index) => ({
       index: index,
       id: val.id,
-      model: val.model,
+      model: (
+        <button
+          type='button'
+          className='link-button'
+          onClick={() => {
+            setmodel_id(Number(val.id))
+            setmodelModalShow(true)
+          }}>
+          {val.model}
+        </button>
+      ),
+      model1: val.model,
       manufacturer: val.manufacturer_name,
       identifier_type: val.identifier_type !== '' ? val.identifier_type : 'N/A',
       is_active: val.is_active
     }))
-  // const defaultSorted = [
-  //   {
-  //     dataField: 'last_position_timestamp',
-  //     order: 'desc'
-  //   }
-  // ]
 
   return (
     <>
@@ -98,6 +111,8 @@ function ModelsTablePage() {
       ) : models_loading ? (
         <Loader />
       ) : null}
+
+      <ModelDataModal show={modelModalShow} hide={() => setmodelModalShow(false)} model_id={model_id} />
     </>
   )
 }

@@ -9,10 +9,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import Loader from 'react-loader-spinner'
 import { getChannels } from '../../Redux/Channels/actions'
 import EndpointsDataModal from '../Modals/endpoints_data_modal'
+import ChannelDataModal from '../Modals/channel_data_modal'
 
 function ChannelsTablePage() {
   const [enpointModalShow, setenpointModalShow] = React.useState(false)
-  const [endpoint_id, setEndpoint_id] = React.useState(null)
+  const [channelModalShow, setchannelModalShow] = React.useState(false)
+  const [endpoint_id, setEndpoint_id] = React.useState()
+  const [channel_id, setchannel_id] = React.useState()
   const endpoints_data = useSelector((state) => state.endpoints.data)
   const endpoints_loaded = useSelector((state) => state.endpoints.loaded)
   const channels_data = useSelector((state) => state.channels.data)
@@ -36,6 +39,11 @@ function ChannelsTablePage() {
       dataField: 'channel_name',
       text: 'Channel Name',
       sort: true
+    },
+    {
+      dataField: 'channel_name1',
+      text: 'Channel Name',
+      hidden: true
     },
     {
       dataField: 'endpoint_name',
@@ -68,13 +76,24 @@ function ChannelsTablePage() {
     channels_data.map((val, index) => ({
       index: index,
       id: val.channel_id,
-      channel_name: val.channel_name,
+      channel_name: (
+        <button
+          type='button'
+          className='link-button'
+          onClick={() => {
+            setchannel_id(Number(val.channel_id))
+            setchannelModalShow(true)
+          }}>
+          {val.channel_name}
+        </button>
+      ),
+      channel_name1: val.channel_name,
       endpoint_name: (
         <button
           type='button'
           className='link-button'
           onClick={() => {
-            setEndpoint_id(val.endpoint_id)
+            setEndpoint_id(Number(val.endpoint_id))
             setenpointModalShow(true)
           }}>
           {endpoint_s_data ? endpoint_s_data[index].name : 'N/A'}
@@ -130,6 +149,7 @@ function ChannelsTablePage() {
         endpoint_id={endpoint_id}
         endpoint_s_data={endpoint_s_data}
       />
+      <ChannelDataModal show={channelModalShow} hide={() => setchannelModalShow(false)} channel_id={channel_id} />
     </>
   )
 }
