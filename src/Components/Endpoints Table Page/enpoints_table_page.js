@@ -8,7 +8,6 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import { useSelector, useDispatch } from 'react-redux'
 import Loader from 'react-loader-spinner'
 import { getEndpoints } from '../../Redux/Endpoints/actions'
-import JSONPretty from 'react-json-pretty'
 
 function EnpointsTablePage() {
   const endpoints_data = useSelector((state) => state.endpoints.data)
@@ -54,7 +53,7 @@ function EnpointsTablePage() {
       id: val.id,
       name: val.name,
       endpoint_type: val.endpoint_type,
-      connection_data: <JSONPretty id='json-pretty' data={val.connection_data}></JSONPretty>
+      connection_data: val.connection_data
     }))
   // const defaultSorted = [
   //   {
