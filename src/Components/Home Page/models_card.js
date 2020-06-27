@@ -25,7 +25,7 @@ function ModelsCard() {
   return (
     <>
       <MyCard
-        header_text={<h3>Models</h3>}
+        header_text={<h3>Models Data</h3>}
         title_text='Search By Model Id'
         header_class='bg-info text-white'
         main_text={
