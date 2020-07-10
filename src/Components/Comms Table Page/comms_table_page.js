@@ -3,10 +3,14 @@ import Loader from 'react-loader-spinner'
 import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
 import { getComms } from '../../Redux/Comms/actions'
 import { Container } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 function CommsTablePage() {
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(getComms())
+  }, [dispatch])
   const comms_data = useSelector((state) => state.comms.data)
   const comms_loaded = useSelector((state) => state.comms.loaded)
   const comms_loading = useSelector((state) => state.comms.isloading)

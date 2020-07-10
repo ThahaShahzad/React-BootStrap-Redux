@@ -16,7 +16,7 @@ function ShipAdminPage() {
   }, [ship_data, id, dispatch])
   return (
     <>
-      {ship_data.loaded ? (
+      {ship_data.loaded && !ship_data.isloading ? (
         <Container fluid>
           <br></br>
           <h1>

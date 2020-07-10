@@ -8,13 +8,13 @@ import { getSubs } from '../../Redux/Subs_ind/actions'
 import EndpointsDataModal from '../Modals/endpoints_data_modal'
 
 function SubsTable({ comm_id }) {
+  const dispatch = useDispatch()
   const [enpointModalShow, setenpointModalShow] = React.useState(false)
   const [endpoint_id, setEndpoint_id] = React.useState(null)
   const endpoints_data = useSelector((state) => state.endpoints.data)
   const subs_data = useSelector((state) => state.subs.data)
   const subs_loaded = useSelector((state) => state.subs.loaded)
   const subs_loading = useSelector((state) => state.subs.isloading)
-  const dispatch = useDispatch()
 
   const find = (id) => endpoints_data && endpoints_data.find((val) => Number(val.id) === id)
   const endpoint_s_data =

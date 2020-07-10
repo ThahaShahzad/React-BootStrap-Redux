@@ -1,9 +1,14 @@
 import React from 'react'
 import MyModal from '../Reuseable/my_modal'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import MyList from '../Reuseable/my_list'
+import { getModels } from '../../Redux/Models/actions'
 
 function ModelDataModal({ show, hide, model_id }) {
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(getModels())
+  }, [dispatch])
   const models_data = useSelector((state) => state.models.data)
   const find = (id) => models_data.find((val) => Number(val.id) === id)
   const model_data = find(model_id)

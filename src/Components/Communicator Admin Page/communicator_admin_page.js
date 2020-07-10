@@ -12,15 +12,21 @@ import CommandsTable from './commands_table'
 import SubsTable from './subs_table'
 import IdentifierTable from './identifier_table'
 import CommsList from './comms_list'
+import { getComms } from '../../Redux/Comms/actions'
+import { getEndpoints } from '../../Redux/Endpoints/actions'
 
 function CommunicatorAdminPage() {
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(getComms())
+    dispatch(getEndpoints())
+  }, [dispatch])
   const comms_data = useSelector((state) => state.comms.data)
   const comms_loading = useSelector((state) => state.comms.isloading)
   const position_data = useSelector((state) => state.positions.data)
   const subs_data = useSelector((state) => state.subs.data)
   const commands_data = useSelector((state) => state.commands.data)
   const [key, setKey] = React.useState('map')
-  const dispatch = useDispatch()
   let { id } = useParams()
   let comms_id = parseInt(id)
   const find = (id) => comms_data.find((val) => val.id === id)

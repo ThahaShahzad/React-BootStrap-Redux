@@ -10,8 +10,14 @@ import Loader from 'react-loader-spinner'
 import { getChannels } from '../../Redux/Channels/actions'
 import EndpointsDataModal from '../Modals/endpoints_data_modal'
 import ChannelDataModal from '../Modals/channel_data_modal'
+import { getEndpoints } from '../../Redux/Endpoints/actions'
 
 function ChannelsTablePage() {
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(getChannels())
+    dispatch(getEndpoints())
+  }, [dispatch])
   const [enpointModalShow, setenpointModalShow] = React.useState(false)
   const [channelModalShow, setchannelModalShow] = React.useState(false)
   const [endpoint_id, setEndpoint_id] = React.useState()
@@ -21,7 +27,6 @@ function ChannelsTablePage() {
   const channels_data = useSelector((state) => state.channels.data)
   const channels_loaded = useSelector((state) => state.channels.loaded)
   const channels_loading = useSelector((state) => state.channels.isloading)
-  const dispatch = useDispatch()
 
   const find_endpoint_data = (id) => endpoints_loaded && endpoints_data.find((val) => Number(val.id) === id)
   const endpoint_ids = channels_loaded && channels_data.map((val) => Number(val.endpoint_id))

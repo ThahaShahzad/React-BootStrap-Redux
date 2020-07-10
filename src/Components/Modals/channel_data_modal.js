@@ -1,9 +1,14 @@
 import React from 'react'
 import MyModal from '../Reuseable/my_modal'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import MyList from '../Reuseable/my_list'
+import { getChannels } from '../../Redux/Channels/actions'
 
 function ChannelDataModal({ show, hide, channel_id }) {
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(getChannels())
+  }, [dispatch])
   const channels_data = useSelector((state) => state.channels.data)
   const find = (id) => channels_data.find((val) => Number(val.channel_id) === id)
   const channel_data = find(channel_id)

@@ -2,10 +2,14 @@ import React from 'react'
 import Loader from 'react-loader-spinner'
 import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
 import { Container } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { getEndpoints } from '../../Redux/Endpoints/actions'
 
 function EnpointsTablePage() {
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(getEndpoints())
+  }, [dispatch])
   const endpoints_data = useSelector((state) => state.endpoints.data)
   const endpoints_loaded = useSelector((state) => state.endpoints.loaded)
   const endpoints_loading = useSelector((state) => state.endpoints.isloading)

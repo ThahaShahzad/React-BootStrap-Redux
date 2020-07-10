@@ -3,10 +3,14 @@ import ModelDataModal from '../Modals/model_data_modal'
 import Loader from 'react-loader-spinner'
 import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
 import { Container } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { getModels } from '../../Redux/Models/actions'
 
 function ModelsTablePage() {
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(getModels())
+  }, [dispatch])
   const [modelModalShow, setmodelModalShow] = React.useState(false)
   const [model_id, setmodel_id] = React.useState()
   const models_data = useSelector((state) => state.models.data)
