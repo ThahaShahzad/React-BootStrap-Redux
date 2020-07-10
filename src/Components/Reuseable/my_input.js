@@ -56,7 +56,7 @@ function MyInput({
           </Form.Control>
         ) : null}
         {input_type === 'text' ? (
-          <FormControl type='text' placeholder={placeholder} name={name} ref={register} />
+          <FormControl type='text' placeholder={placeholder} name={name} autoComplete={autoComplete} ref={register} />
         ) : null}
         {input_type === 'textarea' ? (
           <>

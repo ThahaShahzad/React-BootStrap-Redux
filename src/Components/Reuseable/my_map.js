@@ -4,8 +4,8 @@ import Loader from 'react-loader-spinner'
 
 function MyMap({ lat, lng, width, height, zoom, positions }) {
   const containerStyle = {
-    width: '1700px',
-    height: '500px'
+    width: '100%',
+    marginLeft: 0
   }
   const center = {
     lat: lat,
@@ -45,15 +45,25 @@ function MyMap({ lat, lng, width, height, zoom, positions }) {
     //const onLoad = React.useCallback(function onLoad(mapInstance) {})
     return (
       <>
-        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
-          {
-            <>
-              <Marker position={position} />
-              <Polyline path={path} options={options} />
-            </>
-            // ...Your map components
-          }
-        </GoogleMap>
+        <div
+          style={{
+            height: 500,
+            width: '100%',
+            display: 'flex',
+            flexFlow: 'row nowrap',
+            justifyContent: 'center',
+            padding: 0
+          }}>
+          <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
+            {
+              <>
+                <Marker position={position} />
+                <Polyline path={path} options={options} />
+              </>
+              // ...Your map components
+            }
+          </GoogleMap>
+        </div>
       </>
     )
   }

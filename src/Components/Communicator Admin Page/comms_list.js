@@ -35,7 +35,7 @@ function CommsList({ comm_data, comm_id }) {
         </button>
       )
     },
-    { label: 'Reporting Rate', Value: comm_data.reporting_interval_minutes },
+    { label: 'Reporting Rate', value: comm_data.reporting_interval_minutes },
     {
       label: 'Last Postion',
       value:
@@ -43,7 +43,7 @@ function CommsList({ comm_data, comm_id }) {
           ? `${parseFloat(comm_data.last_position_latitude).toFixed(5)} , ${parseFloat(
               comm_data.last_position_longitude
             ).toFixed(5)}`
-          : 'None'
+          : 'N/A'
     },
     {
       label: 'Last Timestamp',

@@ -81,7 +81,7 @@ function CommunicatorAdminPage() {
                 </Tab>
                 <Tab
                   eventKey='subscribers'
-                  title={`Subscribers (${subs_data.subscribers && subs_data.subscribers.length})`}>
+                  title={`Subscribers (${subs_data.subscribers ? subs_data.subscribers.length : 'N/A'})`}>
                   <SubsTable comm_id={comms_id} />
                 </Tab>
                 <Tab eventKey='track' title='Track' disabled={!position_data.length}>

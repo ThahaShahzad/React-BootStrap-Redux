@@ -20,7 +20,7 @@ export const endpointsFailure = (error) => {
 }
 
 export const getEndpoints = () => {
-  let url = 'http://localhost:5001/endpoints'
+  let url = process.env.REACT_APP_LOCALHOST + 'endpoints'
   console.log(url)
   const options = {
     method: 'GET',

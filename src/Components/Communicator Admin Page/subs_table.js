@@ -17,7 +17,8 @@ function SubsTable({ comm_id }) {
   const dispatch = useDispatch()
 
   const find = (id) => endpoints_data && endpoints_data.find((val) => Number(val.id) === id)
-  const endpoint_s_data = subs_loaded && subs_data.subscribers.map((val) => find(val.endpoint_id))
+  const endpoint_s_data =
+    subs_loaded && subs_data.subscribers && subs_data.subscribers.map((val) => find(val.endpoint_id))
 
   const columns = [
     {
@@ -91,7 +92,7 @@ function SubsTable({ comm_id }) {
 
   return (
     <>
-      {subs_loaded && !subs_loading ? (
+      {subs_loaded && !subs_loading && Array.isArray(subs_data.subscribers) ? (
         <>
           <br></br>
           <Row>
@@ -107,7 +108,9 @@ function SubsTable({ comm_id }) {
         </>
       ) : subs_loading ? (
         <Loader />
-      ) : null}
+      ) : (
+        <h1>No Subscribers Found</h1>
+      )}
       <EndpointsDataModal
         show={enpointModalShow}
         hide={() => setenpointModalShow(false)}
