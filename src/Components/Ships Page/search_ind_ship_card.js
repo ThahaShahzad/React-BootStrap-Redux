@@ -21,8 +21,6 @@ function SearchIndShipCard() {
   }
   return (
     <MyCard
-      header_text='Search For Individual Ship'
-      header_class='h5'
       main_text={
         <FormContext {...ind_ship_form}>
           <Form onSubmit={handleSubmit(onSubmit)}>

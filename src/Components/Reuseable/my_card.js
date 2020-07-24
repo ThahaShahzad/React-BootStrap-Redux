@@ -18,9 +18,11 @@ function MyCard({
   return (
     <>
       <Card border={card_border} style={card_style}>
-        <Card.Header className={header_class} style={header_style}>
-          {header_text}
-        </Card.Header>
+        {header_text && (
+          <Card.Header className={header_class} style={header_style}>
+            {header_text}
+          </Card.Header>
+        )}
         <Card.Img variant='top' src={card_img} />
         <Card.Body style={main_stle}>
           <Card.Title style={title_style}>{title_text}</Card.Title>

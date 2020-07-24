@@ -33,8 +33,6 @@ function FilteredShipsCard() {
   return (
     <>
       <MyCard
-        header_text='Filter Ships'
-        header_class='h5'
         main_text={
           <FormContext {...ind_ship_form}>
             <Form onSubmit={handleSubmit(onSubmit)}>

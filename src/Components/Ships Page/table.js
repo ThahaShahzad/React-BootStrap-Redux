@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getShipsInd } from '../../Redux/Ships_ind/actions'
-import MyTable from '../Reuseable/my_table'
+import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
 import Loader from 'react-loader-spinner'
 import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -23,7 +23,12 @@ function ShipsTable({ itemsPerPage, url }) {
         ),
         id1: val.imo_id,
         ship_name: val.ship_name,
-        ship_status: val.ship_status
+        flag_name: val.flag_name,
+        mmsi: val.mmsi ? val.mmsi : 'N/A',
+        call_sign: val.call_sign ? val.call_sign : 'N/A',
+        shiptype_level_5: val.shiptype_level_5,
+        ship_status: val.ship_status,
+        year_of_build: val.year_of_build
       })),
     [ships_ind, dispatch]
   )
@@ -42,12 +47,37 @@ function ShipsTable({ itemsPerPage, url }) {
       {
         accessor: 'ship_name',
         Header: 'Ship Name',
-        Filter: ''
+        Filter: SelectColumnFilter
+      },
+      {
+        accessor: 'flag_name',
+        Header: 'Flag Name',
+        Filter: SelectColumnFilter
+      },
+      {
+        accessor: 'mmsi',
+        Header: 'MMSI',
+        Filter: SelectColumnFilter
+      },
+      {
+        accessor: 'call_sign',
+        Header: 'Call Sign',
+        Filter: SelectColumnFilter
+      },
+      {
+        accessor: 'shiptype_level_5',
+        Header: 'Ship Type',
+        Filter: SelectColumnFilter
       },
       {
         accessor: 'ship_status',
         Header: 'Ship Status',
-        Filter: ''
+        Filter: SelectColumnFilter
+      },
+      {
+        accessor: 'year_of_build',
+        Header: 'Year Of Build',
+        Filter: SelectColumnFilter
       }
     ],
     []
