@@ -20,7 +20,7 @@ export const channelsFailure = (error) => {
 }
 
 export const getChannels = () => {
-  let url = 'http://localhost:5001/channels'
+  let url = process.env.REACT_APP_LOCALHOST + 'channels'
   console.log(url)
   const options = {
     method: 'GET',

@@ -20,7 +20,7 @@ export const modelGetFailure = (error) => {
 }
 
 export const getModels = () => {
-  let url = 'http://localhost:5001/models'
+  let url = process.env.REACT_APP_LOCALHOST + 'models'
   console.log(url)
   const options = {
     method: 'GET',

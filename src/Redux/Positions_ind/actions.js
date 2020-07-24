@@ -20,7 +20,7 @@ export const positionsFailure = (error) => {
 }
 
 export const getPositions = (id) => {
-  let url = 'http://localhost:5001/positions/' + id
+  let url = process.env.REACT_APP_LOCALHOST + 'positions/' + id
   console.log(url)
   const options = {
     method: 'GET',

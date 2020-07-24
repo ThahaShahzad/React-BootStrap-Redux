@@ -36,6 +36,9 @@ function Header() {
             <Link className='text-light nav-link' to='/searchenpoints'>
               Endpoints
             </Link>
+            <Link className='text-light nav-link' to='/searchships'>
+              Ships
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

@@ -20,7 +20,7 @@ export const commandsFailure = (error) => {
 }
 
 export const getCommands = (id) => {
-  let url = 'http://localhost:5001/commands/' + id
+  let url = process.env.REACT_APP_LOCALHOST + 'commands/' + id
   console.log(url)
   const options = {
     method: 'GET',

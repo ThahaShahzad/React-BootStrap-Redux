@@ -1,103 +1,99 @@
 import React from 'react'
-import BootstrapTable from 'react-bootstrap-table-next'
-import { Container, Row, Col, Button } from 'react-bootstrap'
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
-import paginationFactory from 'react-bootstrap-table2-paginator'
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
-import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css'
-import { useSelector, useDispatch } from 'react-redux'
+import ModelDataModal from '../Modals/model_data_modal'
 import Loader from 'react-loader-spinner'
-import { getModels } from '../../Redux/Models/actions'
+import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
+import { Container } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 
 function ModelsTablePage() {
+  const [modelModalShow, setmodelModalShow] = React.useState(false)
+  const [model_name, setModel_name] = React.useState()
   const models_data = useSelector((state) => state.models.data)
   const models_loaded = useSelector((state) => state.models.loaded)
   const models_loading = useSelector((state) => state.models.isloading)
-  const dispatch = useDispatch()
-  const { SearchBar } = Search
-  const columns = [
-    {
-      dataField: 'id',
-      text: 'Model Id',
-      sort: true
-    },
-    {
-      dataField: 'model',
-      text: 'Model',
-      sort: true
-    },
-    {
-      dataField: 'manufacturer',
-      text: 'Manufacturer',
-      sort: true
-    },
-    {
-      dataField: 'identifier_type',
-      text: 'Identifier Type',
-      sort: true
-    },
-    {
-      dataField: 'is_active',
-      text: 'Is Active',
-      sort: true
-    }
-  ]
-  let table_data =
-    models_loaded &&
-    models_data.map((val, index) => ({
-      index: index,
-      id: val.id,
-      model: val.model,
-      manufacturer: val.manufacturer_name,
-      identifier_type: val.identifier_type !== '' ? val.identifier_type : 'N/A',
-      is_active: val.is_active
-    }))
-  // const defaultSorted = [
-  //   {
-  //     dataField: 'last_position_timestamp',
-  //     order: 'desc'
-  //   }
-  // ]
+  const columns = React.useMemo(
+    () => [
+      {
+        accessor: 'id',
+        Header: 'Model Id',
+        Filter: ''
+      },
+      {
+        accessor: 'id1',
+        Header: 'id',
+        Filter: '',
+        disableSortBy: true
+      },
+      {
+        accessor: 'manufacturer',
+        Header: 'Manufacturer',
+        Filter: SelectColumnFilter,
+        disableSortBy: true
+      },
+      {
+        accessor: 'model',
+        Header: 'Model Name',
+        Filter: SelectColumnFilter,
+        disableSortBy: true
+      },
+      {
+        accessor: 'identifier_type',
+        Header: 'Identifier Type',
+        Filter: SelectColumnFilter,
+        disableSortBy: true
+      },
+      {
+        accessor: 'is_active',
+        Header: 'Is Active',
+        Filter: SelectColumnFilter,
+        disableSortBy: true
+      }
+    ],
+    []
+  )
+  let table_data = React.useMemo(
+    () =>
+      models_loaded &&
+      models_data.map((val, index) => ({
+        id: (
+          <button
+            type='button'
+            className='link-button'
+            onClick={() => {
+              setModel_name(val.model)
+              setmodelModalShow(true)
+            }}>
+            {val.id}
+          </button>
+        ),
+        id1: val.id,
+        manufacturer: val.manufacturer_name,
+        model: val.model,
+        identifier_type: val.identifier_type !== '' ? val.identifier_type : 'N/A',
+        is_active: val.is_active
+      })),
+    [models_loaded, models_data]
+  )
 
   return (
     <>
       {models_loaded && !models_loading ? (
         <Container fluid>
-          <h1>Models Table</h1>
-          <Row>
-            <Col md='1' />
-            <Col>
-              <br></br>
-              <ToolkitProvider keyField='index' data={table_data} columns={columns} search>
-                {(props) => (
-                  <>
-                    <Row>
-                      <Col md='2'>
-                        <SearchBar {...props.searchProps} />
-                      </Col>
-                      <Col md='9' />
-                      <Col md='1'>
-                        Refresh{' '}
-                        <Button onClick={() => dispatch(getModels())}>
-                          <i className='fas fa-sync-alt'></i>
-                        </Button>
-                      </Col>
-                    </Row>
-                    <BootstrapTable
-                      {...props.baseProps}
-                      pagination={paginationFactory()}
-                      wrapperClasses='table-responsive'
-                    />
-                  </>
-                )}
-              </ToolkitProvider>
-            </Col>
-            <Col md='1' />
-          </Row>
+          <h1>Models</h1>
+          <MyTable
+            initialState={{
+              pageSize: models_data.length,
+              hiddenColumns: ['id1']
+            }}
+            columns={columns}
+            data={table_data}
+          />
         </Container>
       ) : models_loading ? (
         <Loader />
       ) : null}
+
+      <ModelDataModal show={modelModalShow} hide={() => setmodelModalShow(false)} model_name={model_name} />
     </>
   )
 }

@@ -1,28 +1,17 @@
 import React from 'react'
-import { Jumbotron, Row, Col } from 'react-bootstrap'
-import CommsCard from './comms_card'
-import ModelsCard from './models_card'
+import { Jumbotron, Container } from 'react-bootstrap'
 
 function HomePage() {
   return (
     <>
-      <Jumbotron>
-        <h1>Welcome to Pole Star Admin Portal</h1>
-      </Jumbotron>
-      <Row>
-        <Col>
-          <CommsCard />
-        </Col>
-        <Col>
-          <ModelsCard />
-        </Col>
-        <Col>
-          <CommsCard />
-        </Col>
-        <Col>
-          <CommsCard />
-        </Col>
-      </Row>
+      <Container fluid>
+        <Jumbotron>
+          <h1>Welcome to Pole Star Admin Portal</h1>
+        </Jumbotron>
+        <img
+          src='https://www.polestarglobal.com/media/tbpkoqbe/pr-brand-launch.jpg?anchor=center&mode=crop&width=1200&height=630&quality=80'
+          alt='Pole Star'></img>
+      </Container>
     </>
   )
 }

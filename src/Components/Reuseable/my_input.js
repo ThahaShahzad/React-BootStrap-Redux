@@ -15,11 +15,13 @@ function MyInput({
   disabled,
   checked,
   size,
+  width,
   rows,
   label_size,
   style,
   defaultValue,
-  placeholder
+  placeholder,
+  autoComplete
 }) {
   const { register } = useFormContext()
   if (!options) {
@@ -54,7 +56,7 @@ function MyInput({
           </Form.Control>
         ) : null}
         {input_type === 'text' ? (
-          <FormControl type='text' placeholder={placeholder} name={name} ref={register} />
+          <FormControl type='text' placeholder={placeholder} name={name} autoComplete={autoComplete} ref={register} />
         ) : null}
         {input_type === 'textarea' ? (
           <>
@@ -109,7 +111,16 @@ function MyInput({
           <>
             <Controller
               name={name}
-              as={<NumberFormat type='text' placeholder={placeholder} name={name} ref={register} />}
+              as={
+                <NumberFormat
+                  type='text'
+                  autoComplete={autoComplete}
+                  size={size}
+                  placeholder={placeholder}
+                  name={name}
+                  ref={register}
+                />
+              }
             />
           </>
         ) : null}
