@@ -2,44 +2,44 @@ import React from 'react'
 import Loader from 'react-loader-spinner'
 import MyMap from '../Reuseable/my_map'
 import { getPositions } from '../../Redux/Positions_ind/actions'
-import { getCommands } from '../../Redux/Commands_ind/actions'
-import { getSubs } from '../../Redux/Subs_ind/actions'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Container, Row, Col, ButtonGroup, Button, Tabs, Tab } from 'react-bootstrap'
 import PositionsTable from './positions_table'
 import CommandsTable from './commands_table'
 import SubsTable from './subs_table'
-import IdentifierTable from './identifier_table'
 import CommsList from './comms_list'
-import { getComms } from '../../Redux/Comms/actions'
-import { getEndpoints } from '../../Redux/Endpoints/actions'
+import { getCommsInd } from '../../Redux/Comms_ind/actions'
+import IdentifierTable from './identifier_table'
 
 function CommunicatorAdminPage() {
   const dispatch = useDispatch()
-  React.useEffect(() => {
-    dispatch(getComms())
-    dispatch(getEndpoints())
-  }, [dispatch])
-  const comms_data = useSelector((state) => state.comms.data)
-  const comms_loading = useSelector((state) => state.comms.isloading)
+  const comms_ind = useSelector((state) => state.comms_ind)
   const position_data = useSelector((state) => state.positions.data)
-  const subs_data = useSelector((state) => state.subs.data)
-  const commands_data = useSelector((state) => state.commands.data)
   const [key, setKey] = React.useState('map')
+  const validComm = comms_ind.data.meta && comms_ind.data.meta.total_count === 1
   let { id } = useParams()
-  let comms_id = parseInt(id)
-  const find = (id) => comms_data.find((val) => val.id === id)
-  const comm_data = find(comms_id)
+
   React.useEffect(() => {
-    if (comm_data) {
-      dispatch(getPositions(comms_id))
-      dispatch(getCommands(comms_id))
-      dispatch(getSubs(comms_id))
+    if (!comms_ind.isloading && !comms_ind.loaded) {
+      dispatch(getCommsInd(`&${id}`))
     }
-  }, [comm_data, comms_id, dispatch])
-  let lat = comm_data && comm_data.last_position_latitude ? Number(comm_data.last_position_latitude) : 0
-  let lng = comm_data && comm_data.last_position_longitude ? Number(comm_data.last_position_longitude) : 0
+  }, [comms_ind, id, dispatch])
+
+  React.useEffect(() => {
+    if (comms_ind.loaded && !comms_ind.isloading && validComm) {
+      dispatch(getPositions(comms_ind.data.objects[0].comm_id))
+    }
+  }, [comms_ind, dispatch, validComm])
+
+  let lat =
+    comms_ind.loaded && validComm && comms_ind.data.objects[0].last_position_latitude
+      ? Number(comms_ind.data.objects[0].last_position_latitude)
+      : 0
+  let lng =
+    comms_ind.loaded && validComm && comms_ind.data.objects[0].last_position_longitude
+      ? Number(comms_ind.data.objects[0].last_position_longitude)
+      : 0
 
   let button_labels = [
     { label: 'Poll' },
@@ -54,7 +54,7 @@ function CommunicatorAdminPage() {
 
   return (
     <>
-      {comm_data ? (
+      {comms_ind.loaded && !comms_ind.isloading && validComm ? (
         <Container fluid>
           <Row>
             <Col md='1' />
@@ -62,10 +62,10 @@ function CommunicatorAdminPage() {
               <br></br>
               <Row>
                 <Col md='6'>
-                  <CommsList comm_data={comm_data} comm_id={comms_id} />
+                  <CommsList comm_data={comms_ind.data.objects[0]} comm_id={comms_ind.data.objects[0].comm_id} />
                 </Col>
                 <Col md='4'>
-                  <IdentifierTable comm_data={comm_data} />
+                  <IdentifierTable comm_data={comms_ind.data.objects[0]} />
                 </Col>
                 <Col md='2'>
                   <ButtonGroup vertical>
@@ -80,15 +80,21 @@ function CommunicatorAdminPage() {
                   <MyMap lat={lat} lng={lng} zoom={4} />
                 </Tab>
                 <Tab eventKey='positions' title={`Positions (${position_data.length ? position_data.length : 'N/A'})`}>
-                  <PositionsTable comm_id={comms_id} />
+                  <PositionsTable comm_id={comms_ind.data.objects[0].comm_id} />
                 </Tab>
-                <Tab eventKey='commands' title={`Commands (${commands_data.length ? commands_data.length : 'N/A'})`}>
-                  <CommandsTable comm_id={comms_id} />
+                <Tab
+                  eventKey='commands'
+                  title={`Commands (${
+                    comms_ind.data.objects[0].commands ? comms_ind.data.objects[0].commands.length : 'N/A'
+                  })`}>
+                  <CommandsTable comm_id={comms_ind.data.objects[0].comm_id} />
                 </Tab>
                 <Tab
                   eventKey='subscribers'
-                  title={`Subscribers (${subs_data.subscribers ? subs_data.subscribers.length : 'N/A'})`}>
-                  <SubsTable comm_id={comms_id} />
+                  title={`Subscribers (${
+                    comms_ind.data.objects[0].subscribers ? comms_ind.data.objects[0].subscribers.length : 'N/A'
+                  })`}>
+                  <SubsTable />
                 </Tab>
                 <Tab eventKey='track' title='Track' disabled={!position_data.length}>
                   <MyMap lat={lat} lng={lng} zoom={4} positions={position_data} />
@@ -98,9 +104,9 @@ function CommunicatorAdminPage() {
             <Col md='1' />
           </Row>
         </Container>
-      ) : comms_loading ? (
+      ) : comms_ind.isloading ? (
         <Loader />
-      ) : !comms_loading ? (
+      ) : !comms_ind.isloading ? (
         <h1>Invaild Id</h1>
       ) : null}
     </>

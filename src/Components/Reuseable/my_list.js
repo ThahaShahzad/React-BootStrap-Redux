@@ -6,7 +6,7 @@ function MyList({ data, label_style, value_style }) {
     <>
       <ListGroup className='text-left'>
         {data.map((val, index) => (
-          <ListGroup.Item key={index}>
+          <ListGroup.Item key={index} hidden={val.label === null}>
             <span style={label_style}>{val.label} : </span>
             <span style={value_style}>{val.value}</span>
           </ListGroup.Item>

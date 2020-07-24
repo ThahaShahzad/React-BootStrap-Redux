@@ -3,16 +3,11 @@ import ModelDataModal from '../Modals/model_data_modal'
 import Loader from 'react-loader-spinner'
 import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
 import { Container } from 'react-bootstrap'
-import { useSelector, useDispatch } from 'react-redux'
-import { getModels } from '../../Redux/Models/actions'
+import { useSelector } from 'react-redux'
 
 function ModelsTablePage() {
-  const dispatch = useDispatch()
-  React.useEffect(() => {
-    dispatch(getModels())
-  }, [dispatch])
   const [modelModalShow, setmodelModalShow] = React.useState(false)
-  const [model_id, setmodel_id] = React.useState()
+  const [model_name, setModel_name] = React.useState()
   const models_data = useSelector((state) => state.models.data)
   const models_loaded = useSelector((state) => state.models.loaded)
   const models_loading = useSelector((state) => state.models.isloading)
@@ -30,14 +25,14 @@ function ModelsTablePage() {
         disableSortBy: true
       },
       {
-        accessor: 'model',
-        Header: 'Model Name',
+        accessor: 'manufacturer',
+        Header: 'Manufacturer',
         Filter: SelectColumnFilter,
         disableSortBy: true
       },
       {
-        accessor: 'manufacturer',
-        Header: 'Manufacturer',
+        accessor: 'model',
+        Header: 'Model Name',
         Filter: SelectColumnFilter,
         disableSortBy: true
       },
@@ -65,15 +60,15 @@ function ModelsTablePage() {
             type='button'
             className='link-button'
             onClick={() => {
-              setmodel_id(Number(val.id))
+              setModel_name(val.model)
               setmodelModalShow(true)
             }}>
             {val.id}
           </button>
         ),
         id1: val.id,
-        model: val.model,
         manufacturer: val.manufacturer_name,
+        model: val.model,
         identifier_type: val.identifier_type !== '' ? val.identifier_type : 'N/A',
         is_active: val.is_active
       })),
@@ -84,14 +79,12 @@ function ModelsTablePage() {
     <>
       {models_loaded && !models_loading ? (
         <Container fluid>
-          <h1>Models Table</h1>
+          <h1>Models</h1>
           <MyTable
             initialState={{
-              pageSize: 10,
+              pageSize: models_data.length,
               hiddenColumns: ['id1']
             }}
-            dispatchFunc={getModels()}
-            page_size_options={[10, 20, 30]}
             columns={columns}
             data={table_data}
           />
@@ -100,7 +93,7 @@ function ModelsTablePage() {
         <Loader />
       ) : null}
 
-      <ModelDataModal show={modelModalShow} hide={() => setmodelModalShow(false)} model_id={model_id} />
+      <ModelDataModal show={modelModalShow} hide={() => setmodelModalShow(false)} model_name={model_name} />
     </>
   )
 }

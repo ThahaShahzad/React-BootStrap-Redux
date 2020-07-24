@@ -226,6 +226,7 @@ function MyTable({
   page_size_options,
   dispatchFunc,
   apiPaganation,
+  Pagination,
   totalItems,
   apiFuncN,
   apiFuncP,
@@ -313,7 +314,7 @@ function MyTable({
             </Col>
           )}
 
-          {!apiPaganation && (
+          {Pagination && (
             <>
               {' '}
               <Col sm='auto'>
@@ -445,42 +446,47 @@ function MyTable({
         This is just a very basic UI implementation:
       */}
         <Row>
-          <Col sm='auto'>
-            <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage} variant='outline-dark'>
-              {'<<'}
-            </Button>{' '}
-            <Button onClick={() => previousPage()} disabled={!canPreviousPage} variant='outline-dark'>
-              {'<'}
-            </Button>{' '}
-            <Button onClick={() => nextPage()} disabled={!canNextPage} variant='outline-dark'>
-              {'>'}
-            </Button>{' '}
-            <Button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} variant='outline-dark'>
-              {'>>'}
-            </Button>{' '}
-          </Col>
-          <Col sm='auto'>
-            <span>
-              Page{' '}
-              <strong>
-                {pageIndex + 1} of {pageOptions.length}
-              </strong>{' '}
-            </span>
-          </Col>
-          <Col sm='auto'>
-            <span>
-              | Go to page:{' '}
-              <input
-                type='number'
-                defaultValue={pageIndex + 1}
-                onChange={(e) => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0
-                  gotoPage(page)
-                }}
-                style={{ width: '100px' }}
-              />
-            </span>{' '}
-          </Col>
+          {Pagination && (
+            <>
+              {' '}
+              <Col sm='auto'>
+                <Button onClick={() => gotoPage(0)} disabled={!canPreviousPage} variant='outline-dark'>
+                  {'<<'}
+                </Button>{' '}
+                <Button onClick={() => previousPage()} disabled={!canPreviousPage} variant='outline-dark'>
+                  {'<'}
+                </Button>{' '}
+                <Button onClick={() => nextPage()} disabled={!canNextPage} variant='outline-dark'>
+                  {'>'}
+                </Button>{' '}
+                <Button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} variant='outline-dark'>
+                  {'>>'}
+                </Button>{' '}
+              </Col>
+              <Col sm='auto'>
+                <span>
+                  Page{' '}
+                  <strong>
+                    {pageIndex + 1} of {pageOptions.length}
+                  </strong>{' '}
+                </span>
+              </Col>
+              <Col sm='auto'>
+                <span>
+                  | Go to page:{' '}
+                  <input
+                    type='number'
+                    defaultValue={pageIndex + 1}
+                    onChange={(e) => {
+                      const page = e.target.value ? Number(e.target.value) - 1 : 0
+                      gotoPage(page)
+                    }}
+                    style={{ width: '100px' }}
+                  />
+                </span>{' '}
+              </Col>{' '}
+            </>
+          )}
           {page_size_options && (
             <Col sm='auto'>
               <select

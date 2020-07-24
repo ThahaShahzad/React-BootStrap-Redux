@@ -1,7 +1,5 @@
 import React from 'react'
-import { Jumbotron, Row, Col, Container } from 'react-bootstrap'
-import CommsCard from './comms_card'
-//import ModelsCard from './models_card'
+import { Jumbotron, Container } from 'react-bootstrap'
 
 function HomePage() {
   return (
@@ -10,15 +8,9 @@ function HomePage() {
         <Jumbotron>
           <h1>Welcome to Pole Star Admin Portal</h1>
         </Jumbotron>
-        <Row className=' justify-content-center'>
-          <Col md='6'>
-            <CommsCard />
-          </Col>
-
-          {/* <Col>
-          <ModelsCard />
-        </Col> */}
-        </Row>
+        <img
+          src='https://www.polestarglobal.com/media/tbpkoqbe/pr-brand-launch.jpg?anchor=center&mode=crop&width=1200&height=630&quality=80'
+          alt='Pole Star'></img>
       </Container>
     </>
   )

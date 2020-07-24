@@ -33,7 +33,14 @@ function ShipAdminPage() {
                 </Col>
                 <Col md='2' />
                 <Col md='4'>
-                  <img src={ship_data.data.objects[0].image} alt='Ship'></img>
+                  <img
+                    src={
+                      ship_data.data.objects[0].image
+                        ? ship_data.data.objects[0].image
+                        : 'http://net.polestarglobal.sis-photos.s3.amazonaws.com/976506_2.jpg'
+                    }
+                    height='300'
+                    alt='Ship'></img>
                 </Col>
               </Row>
               <Tabs id='controlled-tab-example' activeKey={key} onSelect={(k) => setKey(k)}>

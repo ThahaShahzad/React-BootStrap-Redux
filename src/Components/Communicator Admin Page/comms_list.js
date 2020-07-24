@@ -23,7 +23,7 @@ function CommsList({ comm_data, comm_id }) {
       label: 'Model',
       value: (
         <button type='button' className='link-button' onClick={() => setmodelModalShow(true)}>
-          {comm_data.model_name ? comm_data.model_name : 'N/A'}
+          {comm_data.model ? comm_data.model : 'N/A'}
         </button>
       )
     },
@@ -31,11 +31,11 @@ function CommsList({ comm_data, comm_id }) {
       label: 'Channel',
       value: (
         <button type='button' className='link-button' onClick={() => setchannelModalShow(true)}>
-          {comm_data.channel_name ? comm_data.channel_name : 'N/A'}
+          {comm_data.channel ? comm_data.channel : 'N/A'}
         </button>
       )
     },
-    { label: 'Reporting Rate', value: comm_data.reporting_interval_minutes },
+    { label: 'Reporting Rate', value: comm_data.reporting_rate },
     {
       label: 'Last Postion',
       value:
@@ -47,22 +47,24 @@ function CommsList({ comm_data, comm_id }) {
     },
     {
       label: 'Last Timestamp',
-      value: `${comm_data.last_position_timestamp.substring(0, 19)} (${timeSince(
-        Date.parse(comm_data.last_position_timestamp)
-      )} ago) `
+      value: comm_data.last_position_timestamp
+        ? `${comm_data.last_position_timestamp.substring(0, 19)} (${timeSince(
+            Date.parse(comm_data.last_position_timestamp)
+          )} ago) `
+        : 'N/A'
     }
   ]
   return (
     <>
       <MyList data={list_data} label_style={{ fontWeight: 'bold' }} />
       <CommsDataModal show={commsmodalShow} hide={() => setcommsModalShow(false)} comm_data={comm_data} />
-      {comm_data.model_name && (
-        <ModelDataModal show={modelModalShow} hide={() => setmodelModalShow(false)} model_id={comm_data.model_id} />
+      {comm_data.model && (
+        <ModelDataModal show={modelModalShow} hide={() => setmodelModalShow(false)} model_name={comm_data.model} />
       )}
       <ChannelDataModal
         show={channelModalShow}
         hide={() => setchannelModalShow(false)}
-        channel_id={comm_data.channel_id}
+        channel_name={comm_data.channel}
       />
     </>
   )

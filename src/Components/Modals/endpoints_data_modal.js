@@ -22,7 +22,6 @@ function EndpointsDataModal({ show, hide, endpoint_id, endpoint_s_data }) {
         show={show}
         onHide={hide}
         size={'lg'}
-        backdrop='static'
         title_text='Enpoints Data'
         main_text={endpoint_data && <MyList data={formated_data} label_style={{ fontWeight: 'bold' }} />}
       />

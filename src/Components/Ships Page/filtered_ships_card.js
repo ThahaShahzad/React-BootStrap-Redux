@@ -4,16 +4,11 @@ import MyCard from '../Reuseable/my_card'
 import { useForm, FormContext } from 'react-hook-form'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import MyInput from '../Reuseable/my_input'
-import { getShips } from '../../Redux/Ships/actions'
 import { getShipsInd } from '../../Redux/Ships_ind/actions'
 import ShipsTable from './table'
 
 function FilteredShipsCard() {
   const dispatch = useDispatch()
-  React.useEffect(() => {
-    dispatch(getShips())
-  }, [dispatch])
-
   const [showTable, setshowTable] = React.useState(false)
   const [url, setUrl] = React.useState()
   const ships = useSelector((state) => state.ships)

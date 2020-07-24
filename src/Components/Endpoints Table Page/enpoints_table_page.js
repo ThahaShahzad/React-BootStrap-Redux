@@ -2,14 +2,9 @@ import React from 'react'
 import Loader from 'react-loader-spinner'
 import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
 import { Container } from 'react-bootstrap'
-import { useSelector, useDispatch } from 'react-redux'
-import { getEndpoints } from '../../Redux/Endpoints/actions'
+import { useSelector } from 'react-redux'
 
 function EnpointsTablePage() {
-  const dispatch = useDispatch()
-  React.useEffect(() => {
-    dispatch(getEndpoints())
-  }, [dispatch])
   const endpoints_data = useSelector((state) => state.endpoints.data)
   const endpoints_loaded = useSelector((state) => state.endpoints.loaded)
   const endpoints_loading = useSelector((state) => state.endpoints.isloading)
@@ -57,13 +52,11 @@ function EnpointsTablePage() {
     <>
       {endpoints_loaded && !endpoints_loading ? (
         <Container fluid>
-          <h1>Endpoints Table</h1>
+          <h1>Endpoints</h1>
           <MyTable
             initialState={{
-              pageSize: 10
+              pageSize: endpoints_data.length
             }}
-            dispatchFunc={getEndpoints()}
-            page_size_options={[10, 20, 30]}
             columns={columns}
             data={table_data}
           />
