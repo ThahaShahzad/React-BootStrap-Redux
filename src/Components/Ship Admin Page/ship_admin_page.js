@@ -9,7 +9,7 @@ import ShipList from './ship_list'
 
 function ShipAdminPage() {
   const ship_data = useSelector((state) => state.ships_ind)
-  const [key, setKey] = React.useState('shipDeatials')
+  const [key, setKey] = React.useState('shipDetails')
   const dispatch = useDispatch()
   let { id } = useParams()
   const validShip = ship_data.data.meta && ship_data.data.meta.total_count === 1
@@ -52,19 +52,19 @@ function ShipAdminPage() {
                 </Col>
               </Row>
               <Tabs id='controlled-tab-example' activeKey={key} onSelect={(k) => setKey(k)}>
-                <Tab eventKey='shipDeatials' title='Ship Deatials'>
+                <Tab eventKey='shipDetails' title='Ship Details'>
                   <ShipDetialsList ship_data={ship_data.data.objects[0]} />
                 </Tab>
                 <Tab eventKey='ihs' title='IHS Movement'></Tab>
                 <Tab eventKey='mmsiHistory' title='MMSI History'></Tab>
                 <Tab eventKey='portInspection' title='Port Inspection'></Tab>
-                <Tab eventKey='ais' title='AIS'></Tab>
-                <Tab eventKey='psp' title='PSP'></Tab>
                 <Tab eventKey='purpleTrac' title='PurpleTrac'></Tab>
+                <Tab eventKey='portVisits' title='Port Visits'></Tab>
                 <Tab eventKey='smh' title='SMH'></Tab>
                 <Tab eventKey='smhVisits' title='SMH Visits'></Tab>
-                <Tab eventKey='portVisits' title='Port Visists'></Tab>
                 <Tab eventKey='sga' title='SGA'></Tab>
+                <Tab eventKey='ais' title='AIS'></Tab>
+                <Tab eventKey='psp' title='PSP'></Tab>
               </Tabs>
             </Col>
             <Col md='1' />
