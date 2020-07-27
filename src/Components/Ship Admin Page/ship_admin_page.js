@@ -2,7 +2,7 @@ import React from 'react'
 import ShipDetialsList from './ship_detials_list'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { getShipsInd } from '../../Redux/Ships_ind/actions'
+import { getShipsInd, getShipsIndData } from '../../Redux/Ships_ind/actions'
 import { Tab, Container, Row, Col, Tabs } from 'react-bootstrap'
 import Loader from 'react-loader-spinner'
 import ShipList from './ship_list'
@@ -12,12 +12,23 @@ function ShipAdminPage() {
   const [key, setKey] = React.useState('shipDeatials')
   const dispatch = useDispatch()
   let { id } = useParams()
+  const validShip = ship_data.data.meta && ship_data.data.meta.total_count === 1
   React.useEffect(() => {
     if (!ship_data.isloading && !ship_data.loaded) dispatch(getShipsInd(`&${id}`))
   }, [ship_data, id, dispatch])
+
+  React.useEffect(
+    () => {
+      if (ship_data.loaded && !ship_data.isloading && validShip) {
+        dispatch(getShipsIndData(ship_data.data.objects[0].imo_id))
+      }
+    },
+    // eslint-disable-next-line
+    [dispatch, validShip]
+  )
   return (
     <>
-      {ship_data.loaded && !ship_data.isloading ? (
+      {ship_data.loaded && !ship_data.isloading && validShip ? (
         <Container fluid>
           <br></br>
           <h1>
@@ -51,8 +62,8 @@ function ShipAdminPage() {
                 <Tab eventKey='psp' title='PSP'></Tab>
                 <Tab eventKey='purpleTrac' title='PurpleTrac'></Tab>
                 <Tab eventKey='smh' title='SMH'></Tab>
-                <Tab eventKey='portVisists' title='Port Visists'></Tab>
-                <Tab eventKey='voyages' title='Voyages'></Tab>
+                <Tab eventKey='smhVisits' title='SMH Visits'></Tab>
+                <Tab eventKey='portVisits' title='Port Visists'></Tab>
                 <Tab eventKey='sga' title='SGA'></Tab>
               </Tabs>
             </Col>

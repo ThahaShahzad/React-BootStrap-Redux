@@ -12,7 +12,9 @@ function SubsTable() {
   const endpoints_data = useSelector((state) => state.endpoints.data)
   const comms_ind = useSelector((state) => state.comms_ind)
   const find = (id) => endpoints_data && endpoints_data.find((val) => Number(val.id) === id)
-  const endpoint_s_data = comms_ind.loaded && comms_ind.data.objects[0].subscribers.map((val) => find(val.endpoint_id))
+  const validateSubscribers = comms_ind.loaded && Array.isArray(comms_ind.data.objects[0].subscribers)
+  const endpoint_s_data =
+    validateSubscribers && comms_ind.data.objects[0].subscribers.map((val) => find(val.endpoint_id))
 
   const columns = React.useMemo(
     () => [
@@ -63,7 +65,7 @@ function SubsTable() {
 
   let table_data = React.useMemo(
     () =>
-      comms_ind.loaded
+      validateSubscribers
         ? comms_ind.data.objects[0].subscribers.map((val, index) => ({
             id: val.id,
             asset_uri: val.asset_uri,
@@ -85,7 +87,7 @@ function SubsTable() {
             status: val.status
           }))
         : [],
-    [comms_ind, endpoint_s_data]
+    [comms_ind, endpoint_s_data, validateSubscribers]
   )
   return (
     <>
