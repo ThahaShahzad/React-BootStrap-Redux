@@ -1,6 +1,6 @@
 import React from 'react'
 import MyList from '../Reuseable/my_list'
-import timeSince from '../Reuseable/utils'
+import { timeSince } from '../Reuseable/utils'
 import ModelDataModal from '../Modals/model_data_modal'
 import ChannelDataModal from '../Modals/channel_data_modal'
 import CommsDataModal from '../Modals/comms_data_modal'

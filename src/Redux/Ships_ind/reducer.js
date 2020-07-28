@@ -6,9 +6,9 @@ const ships_state = {
   loaded: false,
   error: '',
 
-  IHSMovment: [],
-  movemntLoading: false,
-  movemntLoaded: false,
+  IHSMovement: [],
+  movementLoading: false,
+  movementLoaded: false,
   movementError: '',
 
   MmsiHistory: [],
@@ -40,6 +40,11 @@ const ships_state = {
   SmhLoading: false,
   SmhLoaded: false,
   SmhError: '',
+
+  SmhVisits: [],
+  SmhVisitsLoading: false,
+  SmhVisitsLoaded: false,
+  SmhVisitsError: '',
 
   portVisits: [],
   portVisitsLoading: false,
@@ -80,14 +85,14 @@ const ships_ind_reducer = (state = ships_state, action) => {
     case types.ships_ind_IHSMovment_success:
       return {
         ...state,
-        movemntLoaded: true,
-        movemntLoading: false,
-        IHSMovment: action.payload
+        movementLoaded: true,
+        movementLoading: false,
+        IHSMovement: action.payload
       }
     case types.ships_ind_IHSMovment_failure:
       return {
         ...state,
-        IHSMovment: [],
+        IHSMovement: [],
         movementError: action.payload
       }
     case types.ships_ind_mmsiHistory_request:
@@ -208,6 +213,26 @@ const ships_ind_reducer = (state = ships_state, action) => {
         ...state,
         Smh: [],
         SmhError: action.payload
+      }
+
+    case types.ships_ind_smhVisits_request:
+      return {
+        ...state,
+        SmhVisitsLoading: true
+      }
+    case types.ships_ind_smhVisits_success:
+      return {
+        ...state,
+        SmhVisitsLoaded: true,
+        SmhVisitsLoading: false,
+        SmhVisits: action.payload,
+        SmhVisitsError: ''
+      }
+    case types.ships_ind_smhVisits_failure:
+      return {
+        ...state,
+        SmhVisits: [],
+        SmhVisitsError: action.payload
       }
 
     case types.ships_ind_portVisits_request:

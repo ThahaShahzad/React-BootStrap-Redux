@@ -201,7 +201,6 @@ export const shipsIndSGAFailure = (error) => {
 
 export const getShipsInd = (params) => {
   let url = `${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/sis/${params}`
-  console.log(url)
   const options = {
     method: 'GET',
     url: url
