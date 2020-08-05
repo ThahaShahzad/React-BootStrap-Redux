@@ -66,8 +66,10 @@ function PortInspectionTable({ ship_data, count }) {
         <Container fluid>
           <MyTable
             initialState={{
-              pageSize: ship_data.meta.total_count
+              pageSize: 20
             }}
+            Pagination={true}
+            page_size_options={[20, 40, 60]}
             columns={columns}
             data={table_data}
           />

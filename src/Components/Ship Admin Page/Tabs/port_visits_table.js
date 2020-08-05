@@ -45,7 +45,9 @@ function PortVisitsTable({ ship_data, count }) {
       ship_data.objects.map((val, index) => ({
         entered: isEmpty(val.entered) ? 'N/A' : val.entered,
         departed: isEmpty(val.departed) ? 'N/A' : val.departed,
-        port_name: isEmpty(val.port_name) ? 'N/A' : val.port_name,
+        port_name: isEmpty(val.port_name)
+          ? 'N/A'
+          : `${val.port_name} (${isEmpty(val.port_code) ? 'N/A' : val.port_code})`,
         port_country_name: isEmpty(val.port_country_name) ? 'N/A' : val.port_country_name,
         severity:
           val.severity === 20 ? null : val.severity === 30 ? 'Warning' : val.severity === 40 ? 'Critical' : 'Unknown'
@@ -63,8 +65,10 @@ function PortVisitsTable({ ship_data, count }) {
           <Container fluid>
             <MyTable
               initialState={{
-                pageSize: ship_data.meta.count
+                pageSize: 20
               }}
+              Pagination={true}
+              page_size_options={[20, 40, 60]}
               columns={columns}
               data={table_data}
             />

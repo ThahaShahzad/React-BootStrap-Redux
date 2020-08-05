@@ -120,7 +120,7 @@ function ShipTabs({ ship_data }) {
           eventKey='portVisits'
           title={
             <Title
-              title_name='Port Visists'
+              title_name='Port Visits'
               loaded={ship_data.portVisitsLoaded}
               total_count={ship_data.portVisitsLoaded && ship_data.portVisits.meta.count}
             />
@@ -146,6 +146,19 @@ function ShipTabs({ ship_data }) {
             <Title
               title_name='SMH Visits'
               loaded={ship_data.SmhVisitsLoaded}
+              total_count={ship_data.SmhVisitsLoaded && ship_data.SmhVisits.meta.count}
+            />
+          }>
+          {ship_data.SmhVisitsLoaded && (
+            <SmhVisitsTable ship_data={ship_data.SmhVisits} count={ship_data.SmhVisits.meta.count} />
+          )}
+        </Tab>
+        <Tab
+          eventKey='smhGaps'
+          title={
+            <Title
+              title_name='SMH Gaps'
+              loaded={ship_data.SmhVisitsLoaded}
               total_count={ship_data.SmhVisitsLoaded && ship_data.SmhVisits.count}
             />
           }>
@@ -157,13 +170,15 @@ function ShipTabs({ ship_data }) {
           eventKey='sga'
           title={
             <Title
-              title_name='SGA'
+              title_name='SGA Gaps'
               loaded={ship_data.SgaLoaded}
               total_count={ship_data.SgaLoaded && ship_data.Sga.meta.count}
             />
           }>
           {ship_data.SgaLoaded && <SgaTable ship_data={ship_data.Sga} count={ship_data.Sga.meta.count} />}
         </Tab>
+        <Tab eventKey='lrit' title={'LRIT'} disabled></Tab>
+        <Tab eventKey='mda' title={'MDA'} disabled></Tab>
       </Tabs>
     </>
   )

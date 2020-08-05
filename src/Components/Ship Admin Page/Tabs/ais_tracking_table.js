@@ -53,15 +53,17 @@ function AisTrackingTable({ ship_data, count }) {
 
   let table_data = React.useMemo(
     () =>
-      ship_data.track.data.map((val, index) => ({
-        timestamp: isEmpty(val.timestamp) ? 'N/A' : val.timestamp,
-        location: `${val.longitude} , ${val.latitude}`,
-        speed: isEmpty(val.speed) ? 'N/A' : val.speed,
-        heading: isEmpty(val.heading) ? 'N/A' : val.heading,
-        course: isEmpty(val.course) ? 'N/A' : val.course,
-        source: isEmpty(val.source) ? 'N/A' : val.source,
-        status: isEmpty(val.status) ? 'N/A' : val.status
-      })),
+      ship_data.track.data
+        ? ship_data.track.data.map((val, index) => ({
+            timestamp: isEmpty(val.timestamp) ? 'N/A' : val.timestamp,
+            location: `${val.longitude} , ${val.latitude}`,
+            speed: isEmpty(val.speed) ? 'N/A' : val.speed,
+            heading: isEmpty(val.heading) ? 'N/A' : val.heading,
+            course: isEmpty(val.course) ? 'N/A' : val.course,
+            source: isEmpty(val.source) ? 'N/A' : val.source,
+            status: isEmpty(val.status) ? 'N/A' : val.status
+          }))
+        : [],
     [ship_data]
   )
   return (

@@ -20,13 +20,13 @@ function MmsiHistoryTable({ ship_data, count }) {
       },
       {
         accessor: 'effective_from',
-        Header: 'Country',
+        Header: 'Effective From',
         Filter: '',
         disableSortBy: true
       },
       {
         accessor: 'effective_to',
-        Header: 'Last Port of call',
+        Header: 'Effective To',
         Filter: '',
         disableSortBy: true
       }
