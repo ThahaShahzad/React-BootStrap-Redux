@@ -23,7 +23,7 @@ function SmhVisitsTable({ ship_data, count }) {
       },
       {
         accessor: 'port_name',
-        Header: 'Port (code)',
+        Header: 'Port',
         Filter: SelectColumnFilter,
         disableSortBy: true
       },
@@ -61,7 +61,9 @@ function SmhVisitsTable({ ship_data, count }) {
         index: index + 1,
         entered: isEmpty(val.entered) ? 'N/A' : val.entered,
         departed: isEmpty(val.departed) ? 'N/A' : val.departed,
-        port_name: isEmpty(val.port.port_name) ? val.port.port_code : val.port.port_name,
+        port_name: isEmpty(val.port.port_name)
+          ? 'N/A'
+          : `${val.port.port_name} (${isEmpty(val.port.port_code) ? 'N/A' : val.port.port_code})`,
         port_country_name: isEmpty(val.port.port_country_name) ? 'N/A' : val.port.port_country_name,
         speed: isEmpty(val.speed) ? 'N/A' : val.speed,
         type: isEmpty(val.type) ? 'N/A' : val.type,

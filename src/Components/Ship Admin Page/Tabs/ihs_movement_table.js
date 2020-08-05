@@ -13,7 +13,7 @@ function IhsMovementTable({ ship_data, count }) {
       },
       {
         accessor: 'port_name',
-        Header: 'Port (movemnt type)',
+        Header: 'Port',
         Filter: '',
         disableSortBy: true
       },
@@ -53,7 +53,9 @@ function IhsMovementTable({ ship_data, count }) {
     () =>
       ship_data.objects.map((val, index) => ({
         timestamp: isEmpty(val.timestamp) ? 'N/A' : val.timestamp,
-        port_name: isEmpty(val.port_name) ? 'N/A' : val.port_name,
+        port_name: isEmpty(val.port_name)
+          ? 'N/A'
+          : `${val.port_name} ${isEmpty(val.movement_type) ? '' : `(${val.movement_type})`}`,
         country_name: isEmpty(val.country_name) ? 'N/A' : val.country_name,
         last_port_of_call_name: isEmpty(val.last_port_of_call_name) ? 'N/A' : val.last_port_of_call_name,
         last_port_of_call_country: isEmpty(val.last_port_of_call_country) ? 'N/A' : val.last_port_of_call_country,

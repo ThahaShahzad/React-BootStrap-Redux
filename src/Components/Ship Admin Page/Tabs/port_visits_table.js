@@ -20,7 +20,7 @@ function PortVisitsTable({ ship_data, count }) {
       },
       {
         accessor: 'port_name',
-        Header: 'Port (code)',
+        Header: 'Port',
         Filter: SelectColumnFilter,
         disableSortBy: true
       },
@@ -33,7 +33,7 @@ function PortVisitsTable({ ship_data, count }) {
       {
         accessor: 'severity',
         Header: 'Risk Category',
-        Filter: '',
+        Filter: SelectColumnFilter,
         disableSortBy: true
       }
     ],
