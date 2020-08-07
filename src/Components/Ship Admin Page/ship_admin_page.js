@@ -1,15 +1,14 @@
 import React from 'react'
-import ShipDetialsList from './ship_detials_list'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getShipsInd, getShipsIndData } from '../../Redux/Ships_ind/actions'
-import { Tab, Container, Row, Col, Tabs } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import Loader from 'react-loader-spinner'
 import ShipList from './ship_list'
+import ShipTabs from './Tabs/tabs'
 
 function ShipAdminPage() {
   const ship_data = useSelector((state) => state.ships_ind)
-  const [key, setKey] = React.useState('shipDetails')
   const dispatch = useDispatch()
   let { id } = useParams()
   const validShip = ship_data.data.meta && ship_data.data.meta.total_count === 1
@@ -51,21 +50,7 @@ function ShipAdminPage() {
                     alt='Ship'></img>
                 </Col>
               </Row>
-              <Tabs id='controlled-tab-example' activeKey={key} onSelect={(k) => setKey(k)}>
-                <Tab eventKey='shipDetails' title='Ship Details'>
-                  <ShipDetialsList ship_data={ship_data.data.objects[0]} />
-                </Tab>
-                <Tab eventKey='ihs' title='IHS Movement'></Tab>
-                <Tab eventKey='mmsiHistory' title='MMSI History'></Tab>
-                <Tab eventKey='portInspection' title='Port Inspection'></Tab>
-                <Tab eventKey='purpleTrac' title='PurpleTrac'></Tab>
-                <Tab eventKey='portVisits' title='Port Visits'></Tab>
-                <Tab eventKey='smh' title='SMH'></Tab>
-                <Tab eventKey='smhVisits' title='SMH Visits'></Tab>
-                <Tab eventKey='sga' title='SGA'></Tab>
-                <Tab eventKey='ais' title='AIS'></Tab>
-                <Tab eventKey='psp' title='PSP'></Tab>
-              </Tabs>
+              <ShipTabs ship_data={ship_data} />
             </Col>
             <Col md='1' />
           </Row>

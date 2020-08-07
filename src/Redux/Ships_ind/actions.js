@@ -158,7 +158,25 @@ export const shipsIndSmhVisitsSuccess = (data) => {
 }
 export const shipsIndSmhVisitsFailure = (error) => {
   return {
-    type: types.ships_ind_smhVisits_failure,
+    type: types.ships_ind_smhGaps_failure,
+    payload: error
+  }
+}
+
+export const shipsIndSmhGapsRequest = () => {
+  return {
+    type: types.ships_ind_smhGaps_request
+  }
+}
+export const shipsIndSmhGapsSuccess = (data) => {
+  return {
+    type: types.ships_ind_smhGaps_success,
+    payload: data
+  }
+}
+export const shipsIndSmhGapsFailure = (error) => {
+  return {
+    type: types.ships_ind_smhGaps_failure,
     payload: error
   }
 }
@@ -201,7 +219,6 @@ export const shipsIndSGAFailure = (error) => {
 
 export const getShipsInd = (params) => {
   let url = `${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/sis/${params}`
-  console.log(url)
   const options = {
     method: 'GET',
     url: url
@@ -228,6 +245,7 @@ export const getShipsIndData = (imo_id) => {
   const purpleTrac = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/pt/&imo_id=${imo_id}`)
   const Smh = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/smh/&imo_id=${imo_id}`)
   const SmhVisits = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/smh_visits/&imo_id=${imo_id}`)
+  const SmhGaps = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/smh_gaps/&imo_id=${imo_id}`)
   const portVisits = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/port_visits/&imo_id=${imo_id}`)
   const Sga = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/sga/&imo_id=${imo_id}`)
   return (dispatch) => {
@@ -239,10 +257,11 @@ export const getShipsIndData = (imo_id) => {
     dispatch(shipsIndPurpleTracRequest())
     dispatch(shipsIndSMHRequest())
     dispatch(shipsIndSmhVisitsRequest())
+    dispatch(shipsIndSmhGapsRequest())
     dispatch(shipsIndPortVisitsRequest())
     dispatch(shipsIndSGARequest())
     axios
-      .all([shipMovement, mmsiHistory, portInspection, Ais, Psp, purpleTrac, Smh, SmhVisits, portVisits, Sga])
+      .all([shipMovement, mmsiHistory, portInspection, Ais, Psp, purpleTrac, Smh, SmhVisits, SmhGaps, portVisits, Sga])
       .then(
         axios.spread((...responses) => {
           const shipMovementResponse = responses[0].data
@@ -261,9 +280,11 @@ export const getShipsIndData = (imo_id) => {
           dispatch(shipsIndSMHSuccess(SmhResponse))
           const SmhVisitsResponse = responses[7].data
           dispatch(shipsIndSmhVisitsSuccess(SmhVisitsResponse))
-          const portVisitsResponse = responses[8].data
+          const SmhGapsResponse = responses[8].data
+          dispatch(shipsIndSmhGapsSuccess(SmhGapsResponse))
+          const portVisitsResponse = responses[9].data
           dispatch(shipsIndPortVisitsSuccess(portVisitsResponse))
-          const SgaResponse = responses[9].data
+          const SgaResponse = responses[10].data
           dispatch(shipsIndSGASuccess(SgaResponse))
         })
       )
@@ -276,6 +297,7 @@ export const getShipsIndData = (imo_id) => {
         dispatch(shipsIndPurpleTracFailure(errors.message))
         dispatch(shipsIndSMHFailure(errors.message))
         dispatch(shipsIndSmhVisitsFailure(errors.message))
+        dispatch(shipsIndSmhGapsFailure(errors.message))
         dispatch(shipsIndPortVisitsFailure(errors.message))
         dispatch(shipsIndSGAFailure(errors.message))
       })

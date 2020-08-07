@@ -34,6 +34,10 @@ export const ships_ind_smhVisits_request = 'ships_ind_smhVisits_request'
 export const ships_ind_smhVisits_success = 'ships_ind_smhVisits_success'
 export const ships_ind_smhVisits_failure = 'ships_ind_smhVisits_failure'
 
+export const ships_ind_smhGaps_request = 'ships_ind_smhGaps_request'
+export const ships_ind_smhGaps_success = 'ships_ind_smhGaps_success'
+export const ships_ind_smhGaps_failure = 'ships_ind_smhGaps_failure'
+
 export const ships_ind_portVisits_request = 'ships_ind_portVisits_request'
 export const ships_ind_portVisits_success = 'ships_ind_portVisits_success'
 export const ships_ind_portVisits_failure = 'ships_ind_portVisits_failure'
