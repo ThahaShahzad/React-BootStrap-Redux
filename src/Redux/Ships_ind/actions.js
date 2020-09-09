@@ -127,6 +127,24 @@ export const shipsIndPurpleTracFailure = (error) => {
   }
 }
 
+export const shipsIndPTShipRequest = () => {
+  return {
+    type: types.ships_ind_PTShip_request
+  }
+}
+export const shipsIndPTShipSuccess = (data) => {
+  return {
+    type: types.ships_ind_PTShip_success,
+    payload: data
+  }
+}
+export const shipsIndPTShipFailure = (error) => {
+  return {
+    type: types.ships_ind_PTShip_failure,
+    payload: error
+  }
+}
+
 export const shipsIndSMHRequest = () => {
   return {
     type: types.ships_ind_SMH_request
@@ -248,6 +266,7 @@ export const getShipsIndData = (imo_id) => {
   const SmhGaps = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/smh_gaps/&imo_id=${imo_id}`)
   const portVisits = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/port_visits/&imo_id=${imo_id}`)
   const Sga = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/sga/&imo_id=${imo_id}`)
+  const ptShipData = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/pt_ship_history/&imo_id=${imo_id}`)
   return (dispatch) => {
     dispatch(shipsIndIHSMovmentRequest())
     dispatch(shipsIndMmsiHistoryRequest())
@@ -260,8 +279,10 @@ export const getShipsIndData = (imo_id) => {
     dispatch(shipsIndSmhGapsRequest())
     dispatch(shipsIndPortVisitsRequest())
     dispatch(shipsIndSGARequest())
+    dispatch(shipsIndPTShipRequest())
     axios
-      .all([shipMovement, mmsiHistory, portInspection, Ais, Psp, purpleTrac, Smh, SmhVisits, SmhGaps, portVisits, Sga])
+      .all([shipMovement, mmsiHistory, portInspection, Ais, Psp, purpleTrac,
+          Smh, SmhVisits, SmhGaps, portVisits, Sga, ptShipData])
       .then(
         axios.spread((...responses) => {
           const shipMovementResponse = responses[0].data
@@ -286,6 +307,8 @@ export const getShipsIndData = (imo_id) => {
           dispatch(shipsIndPortVisitsSuccess(portVisitsResponse))
           const SgaResponse = responses[10].data
           dispatch(shipsIndSGASuccess(SgaResponse))
+          const PTShipResponse = responses[11].data
+          dispatch(shipsIndPTShipSuccess(PTShipResponse))
         })
       )
       .catch((errors) => {
@@ -300,6 +323,7 @@ export const getShipsIndData = (imo_id) => {
         dispatch(shipsIndSmhGapsFailure(errors.message))
         dispatch(shipsIndPortVisitsFailure(errors.message))
         dispatch(shipsIndSGAFailure(errors.message))
+        dispatch(shipsIndPTShipFailure(errors.message))
       })
   }
 }

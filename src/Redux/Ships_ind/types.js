@@ -26,6 +26,10 @@ export const ships_ind_PurpleTrac_request = 'ships_ind_PurpleTrac_request'
 export const ships_ind_PurpleTrac_success = 'ships_ind_PurpleTrac_success'
 export const ships_ind_PurpleTrac_failure = 'ships_ind_PurpleTrac_failure'
 
+export const ships_ind_PTShip_request = 'ships_ind_PTShip_request'
+export const ships_ind_PTShip_success = 'ships_ind_PTShip_success'
+export const ships_ind_PTShip_failure = 'ships_ind_PTShip_failure'
+
 export const ships_ind_SMH_request = 'ships_ind_SMH_request'
 export const ships_ind_SMH_success = 'ships_ind_SMH_success'
 export const ships_ind_SMH_failure = 'ships_ind_SMH_failure'

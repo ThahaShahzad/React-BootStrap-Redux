@@ -43,7 +43,7 @@ function Header() {
               <Link className='text-light text-white nav-link' to='/screening'>
                   <b>USCG Screening</b>
             </Link>
-             <Link className='text-light text-white nav-link' to='/screening'>
+             <Link className='text-light text-white nav-link' to='/aoi'>
                   <b>AOI Manager</b>
             </Link>
           </Nav>

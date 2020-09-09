@@ -200,6 +200,26 @@ const ships_ind_reducer = (state = ships_state, action) => {
         purpleTracError: action.payload
       }
 
+    case types.ships_ind_PTShip_request:
+      return {
+        ...state,
+        ptShipLoading: true
+      }
+    case types.ships_ind_PTShip_success:
+      return {
+        ...state,
+        ptShipLoaded: true,
+        ptShipLoading: false,
+        ptShipData: action.payload,
+        ptShipError: ''
+      }
+    case types.ships_ind_PTShip_failure:
+      return {
+        ...state,
+        ptShipData: [],
+        ptShipError: action.payload
+      }
+
     case types.ships_ind_SMH_request:
       return {
         ...state,

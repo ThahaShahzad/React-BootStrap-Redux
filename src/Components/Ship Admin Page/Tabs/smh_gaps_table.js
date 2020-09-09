@@ -7,7 +7,7 @@ function SmhGapsTable({ ship_data, count }) {
   const columns = React.useMemo(
     () => [
       {
-        accessor: 'gaps_hour',
+        accessor: 'gap_hours',
         Header: 'Duration (hr)',
         Filter: ''
       },
@@ -17,26 +17,26 @@ function SmhGapsTable({ ship_data, count }) {
         Filter: ''
       },
       {
-        accessor: 'last_report.latitude',
+        accessor: 'last_report_position',
         Header: 'Start Position',
         Filter: '',
         disableSortBy: true
       },
       {
-        accessor: 'last_report.speed',
-        Header: 'start_speed',
+        accessor: 'last_report_speed',
+        Header: 'Start speed',
         Filter: '',
         disableSortBy: true
       },
       {
-        accessor: 'last_report.course',
-        Header: 'start_course',
+        accessor: 'last_report_course',
+        Header: 'Start course',
         Filter: '',
         disableSortBy: true
       },
       {
-        accessor: 'last_report.status',
-        Header: 'start_status',
+        accessor: 'last_report_status',
+        Header: 'Start status',
         Filter: '',
         disableSortBy: true
       },
@@ -46,26 +46,26 @@ function SmhGapsTable({ ship_data, count }) {
         Filter: ''
       },
       {
-        accessor: 'current_report.latitude',
-        Header: 'end_position',
+        accessor: 'current_report_position',
+        Header: 'End position',
         Filter: '',
         disableSortBy: true
       },
       {
-        accessor: 'current_report.speed',
-        Header: 'end_speed',
+        accessor: 'current_report_speed',
+        Header: 'End speed',
         Filter: '',
         disableSortBy: true
       },
       {
-        accessor: 'current_report.course',
-        Header: 'end_course',
+        accessor: 'current_report_course',
+        Header: 'End course',
         Filter: '',
         disableSortBy: true
       },
       {
-        accessor: 'current_report.status',
-        Header: 'end_status',
+        accessor: 'current_report_status',
+        Header: 'End status',
         Filter: '',
         disableSortBy: true
       }
@@ -76,19 +76,18 @@ function SmhGapsTable({ ship_data, count }) {
   let table_data = React.useMemo(
     () =>
       ship_data.objects.map((val, index) => ({
-        duration_seconds: isEmpty(val.duration_seconds) ? 'N/A' : (val.duration_seconds / 3600).toFixed(5),
-        start_timestamp: isEmpty(val.start_timestamp) ? 'N/A' : val.start_timestamp,
-        start_position: isEmpty(val.start_position) ? 'N/A' : val.start_position,
-        start_speed: isEmpty(val.start_speed) ? 'N/A' : val.start_speed,
-        start_course: isEmpty(val.start_course) ? 'N/A' : val.start_course,
-        start_status: isEmpty(val.start_status) ? 'N/A' : val.start_status,
+        gap_hours: isEmpty(val.gap_hours) ? 'N/A' : val.gap_hours,
+        last_report_timestamp: isEmpty(val.last_report_timestamp) ? 'N/A' : val.last_report_timestamp,
+        last_report_position: isEmpty(val.last_report) ? 'N/A' : val.last_report.longitude + ','  + val.last_report.latitude,
+        last_report_speed: isEmpty(val.last_report) ? 'N/A' : val.last_report.speed,
+        last_report_course: isEmpty(val.last_report) ? 'N/A' : val.last_report.course,
+        last_report_status: isEmpty(val.last_report) ? 'N/A' : val.last_report.status,
 
-        end_timestamp: isEmpty(val.end_timestamp) ? 'N/A' : val.end_timestamp,
-        end_position: isEmpty(val.end_position) ? 'N/A' : val.end_position,
-        end_speed: isEmpty(val.end_speed) ? 'N/A' : val.end_speed,
-        end_course: isEmpty(val.port_name) ? 'N/A' : val.end_course,
-        end_status: isEmpty(val.end_status) ? 'N/A' : val.end_status,
-        start_location: `${val.last_report.longitude} , ${val.last_report.latitude}`
+        current_report_timestamp: isEmpty(val.current_report_timestamp) ? 'N/A' : val.current_report_timestamp,
+        current_report_position: isEmpty(val.current_report) ? 'N/A' : val.current_report.longitude + ','  + val.current_report.latitude,
+        current_report_speed: isEmpty(val.current_report) ? 'N/A' : val.current_report.speed,
+        current_report_course: isEmpty(val.current_report) ? 'N/A' : val.current_report.course,
+        current_report_status: isEmpty(val.current_report) ? 'N/A' : val.current_report.status
       })),
     [ship_data]
   )
@@ -98,13 +97,15 @@ function SmhGapsTable({ ship_data, count }) {
         'None Found'
       ) : (
         <>
+            <p><b>Screening Date</b> : {ship_data.meta.timestamp}</p>
+            <p><b>AIS Days</b> : {ship_data.meta.ais_days}</p>
           <Container fluid>
             <MyTable
               initialState={{
-                pageSize: 50
+                pageSize: 100
               }}
               Pagination={true}
-              page_size_options={[50, 100]}
+              page_size_options={[50, 100, 200, 500]}
               columns={columns}
               data={table_data}
             />
