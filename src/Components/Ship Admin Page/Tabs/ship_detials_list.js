@@ -10,16 +10,16 @@ function ShipDetialsList({ ship_data }) {
       value: val === 'data' ? null : val === 'flag' ? null : data[index] ? data[index] : 'N/A'
     }
   })
-  let headers1 = Object.keys(ship_data.flag)
-  let data1 = Object.values(ship_data.flag)
+  let headers1 = Object.keys(ship_data.flag || {})
+  let data1 = Object.values(ship_data.flag || {})
   let formated_data1 = headers1.map((val, index) => {
     return {
       label: val,
       value: data1[index] ? data1[index] : 'N/A'
     }
   })
-  let headers2 = Object.keys(ship_data.data)
-  let data2 = Object.values(ship_data.data)
+  let headers2 = Object.keys(ship_data.data || {})
+  let data2 = Object.values(ship_data.data || {})
   let formated_data2 = headers2.map((val, index) => {
     return {
       label: val,

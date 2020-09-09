@@ -1,23 +1,33 @@
 import React from 'react'
-import ShipDetialsList from './ship_detials_list'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { getShipsInd } from '../../Redux/Ships_ind/actions'
-import { Tab, Container, Row, Col, Tabs } from 'react-bootstrap'
+import { getShipsInd, getShipsIndData } from '../../Redux/Ships_ind/actions'
+import { Container, Row, Col } from 'react-bootstrap'
 import Loader from 'react-loader-spinner'
 import ShipList from './ship_list'
+import ShipTabs from './Tabs/tabs'
 
 function ShipAdminPage() {
   const ship_data = useSelector((state) => state.ships_ind)
-  const [key, setKey] = React.useState('shipDeatials')
   const dispatch = useDispatch()
   let { id } = useParams()
+  const validShip = ship_data.data.meta && ship_data.data.meta.total_count === 1
   React.useEffect(() => {
     if (!ship_data.isloading && !ship_data.loaded) dispatch(getShipsInd(`&${id}`))
   }, [ship_data, id, dispatch])
+
+  React.useEffect(
+    () => {
+      if (ship_data.loaded && !ship_data.isloading && validShip) {
+        dispatch(getShipsIndData(ship_data.data.objects[0].imo_id))
+      }
+    },
+    // eslint-disable-next-line
+    [dispatch, validShip]
+  )
   return (
     <>
-      {ship_data.loaded && !ship_data.isloading ? (
+      {ship_data.loaded && !ship_data.isloading && validShip ? (
         <Container fluid>
           <br></br>
           <h1>
@@ -40,21 +50,7 @@ function ShipAdminPage() {
                     alt='Ship'></img>
                 </Col>
               </Row>
-              <Tabs id='controlled-tab-example' activeKey={key} onSelect={(k) => setKey(k)}>
-                <Tab eventKey='shipDeatials' title='Ship Deatials'>
-                  <ShipDetialsList ship_data={ship_data.data.objects[0]} />
-                </Tab>
-                <Tab eventKey='ihs' title='IHS Movement'></Tab>
-                <Tab eventKey='mmsiHistory' title='MMSI History'></Tab>
-                <Tab eventKey='portInspection' title='Port Inspection'></Tab>
-                <Tab eventKey='ais' title='AIS'></Tab>
-                <Tab eventKey='psp' title='PSP'></Tab>
-                <Tab eventKey='purpleTrac' title='PurpleTrac'></Tab>
-                <Tab eventKey='smh' title='SMH'></Tab>
-                <Tab eventKey='portVisists' title='Port Visists'></Tab>
-                <Tab eventKey='voyages' title='Voyages'></Tab>
-                <Tab eventKey='sga' title='SGA'></Tab>
-              </Tabs>
+              <ShipTabs ship_data={ship_data} />
             </Col>
             <Col md='1' />
           </Row>

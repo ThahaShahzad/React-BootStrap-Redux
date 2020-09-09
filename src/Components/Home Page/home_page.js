@@ -6,7 +6,7 @@ function HomePage() {
     <>
       <Container fluid>
         <Jumbotron>
-          <h1>Welcome to Pole Star Admin Portal</h1>
+          <h1>Welcome to Pole Star Support Portal</h1>
         </Jumbotron>
         <img
           src='https://www.polestarglobal.com/media/tbpkoqbe/pr-brand-launch.jpg?anchor=center&mode=crop&width=1200&height=630&quality=80'

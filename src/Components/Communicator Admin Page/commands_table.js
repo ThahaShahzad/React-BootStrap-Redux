@@ -6,6 +6,7 @@ import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
 
 function CommandsTable() {
   const comms_ind = useSelector((state) => state.comms_ind)
+  const validateCommands = comms_ind.loaded && Array.isArray(comms_ind.data.objects[0].commands)
 
   const columns = React.useMemo(
     () => [
@@ -62,7 +63,7 @@ function CommandsTable() {
   )
   let table_data = React.useMemo(
     () =>
-      comms_ind.loaded
+      validateCommands
         ? comms_ind.data.objects[0].commands.map((val, index) => ({
             id: val.id,
             datetime: val.datetime,
@@ -74,7 +75,7 @@ function CommandsTable() {
             ack_latency_sec: !val.ack_latency_sec || val.ack_latency_sec === 'NULL' ? 'N/A' : val.ack_latency_sec
           }))
         : [],
-    [comms_ind]
+    [comms_ind, validateCommands]
   )
   return (
     <>

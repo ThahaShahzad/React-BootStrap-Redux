@@ -36,8 +36,15 @@ function Header() {
             <Link className='text-light nav-link' to='/searchenpoints'>
               Endpoints
             </Link>
+             <span className='text-light align-middle'> == </span>
             <Link className='text-light nav-link' to='/searchships'>
-              Ships
+              <b>Ship Finder</b>
+            </Link>
+              <Link className='text-light text-white nav-link' to='/screening'>
+                  <b>USCG Screening</b>
+            </Link>
+             <Link className='text-light text-white nav-link' to='/aoi'>
+                  <b>AOI Manager</b>
             </Link>
           </Nav>
         </Navbar.Collapse>

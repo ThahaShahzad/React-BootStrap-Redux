@@ -17,7 +17,6 @@ function SearchIndCommsCard() {
   const dispatch = useDispatch()
   const { handleSubmit, errors, getValues, formState } = ind_comm_form
   const { isSubmitted } = formState
-  console.log('SearchIndCommsCard -> isSubmitted', isSubmitted)
   const form_data = getValues({ nest: true })
   let history = useHistory()
   const onSubmit = (form_data) => {
