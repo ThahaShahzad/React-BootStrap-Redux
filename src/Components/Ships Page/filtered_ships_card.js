@@ -14,7 +14,7 @@ function FilteredShipsCard() {
   const ships = useSelector((state) => state.ships)
   const ind_ship_form = useForm()
   const { handleSubmit } = ind_ship_form
-  let itemsPerPage = 50
+  let itemsPerPage = 100
   const onSubmit = (form_data) => {
     dispatch(
       getShipsInd(

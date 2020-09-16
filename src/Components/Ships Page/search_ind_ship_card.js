@@ -7,19 +7,27 @@ import { useHistory } from 'react-router-dom'
 import MyInput from '../Reuseable/my_input'
 import { getShipsInd } from '../../Redux/Ships_ind/actions'
 import * as yup from 'yup'
+import ShipsTable from '../Ships Page/table'
 
 function SearchIndShipCard() {
   const ind_ship_form = useForm({
     validationSchema: yup.object().shape({ ship: yup.string().required() })
   })
   const dispatch = useDispatch()
+  const [showTable, setshowTable] = React.useState(false)
   const { handleSubmit, errors } = ind_ship_form
+  const [url, setUrl] = React.useState()
   let history = useHistory()
+  let itemsPerPage = 100
   const onSubmit = (form_data) => {
-    dispatch(getShipsInd(`&${form_data.search_type}=${form_data.ship}`))
-    history.push(`/shipAdmin/${form_data.search_type}=${form_data.ship}`)
+
+    dispatch(getShipsInd(`&${form_data.search_type}__icontains=${form_data.ship}&limit=${itemsPerPage}&offset=0`))
+    //history.push(`/shipAdmin/${form_data.search_type}__icontains=${form_data.ship}`)
+    setUrl(`&${form_data.search_type}__icontains=${form_data.ship}`)
+    setshowTable(true)
   }
   return (
+   <>
     <MyCard
       main_text={
         <FormContext {...ind_ship_form}>
@@ -34,7 +42,7 @@ function SearchIndShipCard() {
                   }
                   name='search_type'
                   input_type='select'
-                  options={['imo', 'ship_name', 'mmsi']}
+                  options={['imo_id', 'ship_name', 'mmsi', 'operator', 'registered_owner','ship_manager','technical_manager', 'group_beneficial_owner']}
                 />
               </Col>
               <Col>
@@ -60,6 +68,8 @@ function SearchIndShipCard() {
         </FormContext>
       }
     />
+      {showTable && <ShipsTable itemsPerPage={itemsPerPage} url={url} />}
+   </>
   )
 }
 

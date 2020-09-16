@@ -22,15 +22,15 @@ function ShipsPage() {
           </Col>
         </Row> */}
 
-        <Row className=' justify-content-center'>
-          <Col md='8'>
+        <Row className='justify-content-center'>
+          <Col md='11'>
             <Accordion defaultActiveKey='0'>
               <Card>
                 <Accordion.Toggle
                   as={Card.Header}
                   eventKey='0'
                   onClick={() => setexpanded((prevExpanded) => (prevExpanded = !prevExpanded))}>
-                  Search Individual Ship{' '}
+                  Search Ships{' '}
                   {expanded ? <i className='fas fa-chevron-down'></i> : <i className='fas fa-chevron-up'></i>}
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey='0'>
