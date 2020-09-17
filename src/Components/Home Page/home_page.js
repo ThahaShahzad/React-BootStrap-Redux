@@ -2,6 +2,16 @@ import React from 'react'
 import { Jumbotron, Container } from 'react-bootstrap'
 
 function HomePage() {
+  console.log(process.env.REACT_APP_LOCALHOST)
+  console.log(process.env.REACT_APP_LOCALHOST_BI)
+  console.log(process.env.NODE_ENV)
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  //process.env.REACT_APP_LOCALHOST = host
+  console.log(host)
+
   return (
     <>
       <Container fluid>

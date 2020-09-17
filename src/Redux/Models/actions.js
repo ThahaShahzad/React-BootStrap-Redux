@@ -20,7 +20,11 @@ export const modelGetFailure = (error) => {
 }
 
 export const getModels = () => {
-  let url = process.env.REACT_APP_LOCALHOST + 'models'
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = host + 'models'
   console.log(url)
   const options = {
     method: 'GET',

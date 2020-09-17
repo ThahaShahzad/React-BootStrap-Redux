@@ -20,7 +20,11 @@ export const commsFailure = (error) => {
 }
 
 export const getComms = () => {
-  let url = process.env.REACT_APP_LOCALHOST + 'comms_filters'
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = host + 'comms_filters'
   console.log(url)
   const options = {
     method: 'GET',

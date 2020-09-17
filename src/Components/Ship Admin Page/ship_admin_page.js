@@ -4,12 +4,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getShipsInd, getShipsIndData } from '../../Redux/Ships_ind/actions'
 import { Container, Row, Col } from 'react-bootstrap'
 import Loader from 'react-loader-spinner'
-import ShipList from './ship_list'
+import {ShipList, ShipList2} from './ship_list'
 import ShipTabs from './Tabs/tabs'
-import ShipsTable from '../Ships Page/table'
 
 function ShipAdminPage() {
-  const ship_data = useSelector((state) => state.ships_ind)
+  let ship_data = useSelector((state) => state.ships_ind)
   const dispatch = useDispatch()
 
   let { id } = useParams()
@@ -32,9 +31,11 @@ function ShipAdminPage() {
   if (ship_data.data.meta && ship_data.data.meta.total_count > 1) {
     //setshowTable(true)
     console.log(id)
+    //ship_data.loaded = false
+    //ship_data.isloading = true
     //let itemsPerPage = 50
     //return (<><ShipsTable itemsPerPage={itemsPerPage} url={id} /> </>)
-    return (<>Done</>)
+    return (<>.</>)
   } else {
                   return (
                   <>
@@ -50,15 +51,18 @@ function ShipAdminPage() {
                               <Col>
                                   <br></br>
                                   <Row>
-                                      <Col md='6'>
+                                      <Col md='4'>
                                           <ShipList ship_data={ship_data.data.objects[0]}/>
                                       </Col>
-                                      <Col md='2'/>
+                                      <Col md='4'>
+                                          <ShipList2 ship_data={ship_data.data.objects[0]}/>
+                                      </Col>
                                       <Col md='4'>
                                           <img
                                               src={ship_data.data.objects[0].image && ship_data.data.objects[0].image}
                                               height='300'
                                               alt='Ship'></img>
+                                          <p>{ship_data.data.objects[0].image}</p>
                                       </Col>
                                   </Row>
                                   <ShipTabs ship_data={ship_data}/>

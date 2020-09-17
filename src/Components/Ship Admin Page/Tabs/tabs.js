@@ -62,7 +62,7 @@ function ShipTabs({ ship_data }) {
             <Title
               title_name='Port Inspection'
               loaded={ship_data.portInspecLoaded}
-              total_count={ship_data.portInspecLoaded && ship_data.portInspection.meta.total_count}
+              total_count={ship_data.portInspecLoaded && ship_data.portInspection && ship_data.portInspection.meta.total_count}
             />
           }>
           {ship_data.portInspecLoaded && (

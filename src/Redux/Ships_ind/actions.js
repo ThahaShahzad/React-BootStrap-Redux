@@ -236,7 +236,11 @@ export const shipsIndSGAFailure = (error) => {
 }
 
 export const getShipsInd = (params) => {
-  let url = `${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/sis/${params}`
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = `${host}bi/?path=api/v1/sis/${params}`
   const options = {
     method: 'GET',
     url: url
@@ -255,18 +259,23 @@ export const getShipsInd = (params) => {
 }
 
 export const getShipsIndData = (imo_id) => {
-  const shipMovement = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/ship_movement/&imo_id=${imo_id}`)
-  const mmsiHistory = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/mmsi_history/&imo_id=${imo_id}`)
-  const portInspection = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/inspections/&imo_id=${imo_id}`)
-  const Ais = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/ais_status/&imo_id=${imo_id}`)
-  const Psp = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/psp_ships/&imo_id=${imo_id}`)
-  const purpleTrac = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/pt/&imo_id=${imo_id}`)
-  const Smh = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/smh/&imo_id=${imo_id}`)
-  const SmhVisits = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/smh_visits/&imo_id=${imo_id}`)
-  const SmhGaps = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/smh_gaps/&imo_id=${imo_id}`)
-  const portVisits = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/port_visits/&imo_id=${imo_id}`)
-  const Sga = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/sga/&imo_id=${imo_id}`)
-  const ptShipData = axios.get(`${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/pt_ship_history/&imo_id=${imo_id}`)
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  console.log(host)
+  const shipMovement = axios.get(`${host}bi/?path=api/v1/ship_movement/&imo_id=${imo_id}`)
+  const mmsiHistory = axios.get(`${host}bi/?path=api/v1/mmsi_history/&imo_id=${imo_id}`)
+  const portInspection = axios.get(`${host}bi/?path=api/v1/inspections/&imo_id=${imo_id}`)
+  const Ais = axios.get(`${host}bi/?path=api/v1/ais_status/&imo_id=${imo_id}`)
+  const Psp = axios.get(`${host}bi/?path=api/v1/psp_ships/&imo_id=${imo_id}`)
+  const purpleTrac = axios.get(`${host}bi/?path=api/v1/pt/&imo_id=${imo_id}`)
+  const Smh = axios.get(`${host}bi/?path=api/v1/smh/&imo_id=${imo_id}`)
+  const SmhVisits = axios.get(`${host}bi/?path=api/v1/smh_visits/&imo_id=${imo_id}`)
+  const SmhGaps = axios.get(`${host}bi/?path=api/v1/smh_gaps/&imo_id=${imo_id}`)
+  const portVisits = axios.get(`${host}bi/?path=api/v1/port_visits/&imo_id=${imo_id}`)
+  const Sga = axios.get(`${host}bi/?path=api/v1/sga/&imo_id=${imo_id}`)
+  const ptShipData = axios.get(`${host}bi/?path=api/v1/pt_ship_history/&imo_id=${imo_id}`)
   return (dispatch) => {
     dispatch(shipsIndIHSMovmentRequest())
     dispatch(shipsIndMmsiHistoryRequest())
@@ -280,50 +289,64 @@ export const getShipsIndData = (imo_id) => {
     dispatch(shipsIndPortVisitsRequest())
     dispatch(shipsIndSGARequest())
     dispatch(shipsIndPTShipRequest())
+
     axios
-      .all([shipMovement, mmsiHistory, portInspection, Ais, Psp, purpleTrac,
-          Smh, SmhVisits, SmhGaps, portVisits, Sga, ptShipData])
+      .all([shipMovement, Psp, purpleTrac,
+          Smh,  portVisits, Sga, ptShipData])
       .then(
         axios.spread((...responses) => {
           const shipMovementResponse = responses[0].data
           dispatch(shipsIndIHSMovmentSuccess(shipMovementResponse))
-          const mmsiHistoryResponse = responses[1].data
-          dispatch(shipsIndMmsiHistorySuccess(mmsiHistoryResponse))
-          const portInspectionResponse = responses[2].data
-          dispatch(shipsIndPortIspecSuccess(portInspectionResponse))
-          const AisResponse = responses[3].data
-          dispatch(shipsIndAISSuccess(AisResponse))
-          const PspResponse = responses[4].data
+          const PspResponse = responses[1].data
           dispatch(shipsIndPSPSuccess(PspResponse))
-          const purpleTracResponse = responses[5].data
+          const purpleTracResponse = responses[2].data
           dispatch(shipsIndPurpleTracSuccess(purpleTracResponse))
-          const SmhResponse = responses[6].data
+          const SmhResponse = responses[3].data
           dispatch(shipsIndSMHSuccess(SmhResponse))
-          const SmhVisitsResponse = responses[7].data
-          dispatch(shipsIndSmhVisitsSuccess(SmhVisitsResponse))
-          const SmhGapsResponse = responses[8].data
-          dispatch(shipsIndSmhGapsSuccess(SmhGapsResponse))
-          const portVisitsResponse = responses[9].data
-          dispatch(shipsIndPortVisitsSuccess(portVisitsResponse))
-          const SgaResponse = responses[10].data
+          const portVisitsResponse = responses[4].data
+          dispatch(shipsIndSmhVisitsSuccess(portVisitsResponse))
+          const SgaResponse = responses[5].data
           dispatch(shipsIndSGASuccess(SgaResponse))
-          const PTShipResponse = responses[11].data
+          const PTShipResponse = responses[6].data
           dispatch(shipsIndPTShipSuccess(PTShipResponse))
         })
       )
       .catch((errors) => {
         dispatch(shipsIndIHSMovmentFailure(errors.message))
-        dispatch(shipsIndMmsiHistoryFailure(errors.message))
-        dispatch(shipsIndPortIspecFailure(errors.message))
-        dispatch(shipsIndAISFailure(errors.message))
         dispatch(shipsIndPSPFailure(errors.message))
         dispatch(shipsIndPurpleTracFailure(errors.message))
         dispatch(shipsIndSMHFailure(errors.message))
         dispatch(shipsIndSmhVisitsFailure(errors.message))
-        dispatch(shipsIndSmhGapsFailure(errors.message))
-        dispatch(shipsIndPortVisitsFailure(errors.message))
         dispatch(shipsIndSGAFailure(errors.message))
         dispatch(shipsIndPTShipFailure(errors.message))
+      })
+
+    axios
+      .all([mmsiHistory, portInspection, Ais, SmhVisits, SmhGaps, portVisits])
+      .then(
+        axios.spread((...responses) => {
+          const mmsiHistoryResponse = responses[0].data
+          dispatch(shipsIndMmsiHistorySuccess(mmsiHistoryResponse))
+          const portInspectionResponse = responses[1].data
+          dispatch(shipsIndPortIspecSuccess(portInspectionResponse))
+          const AisResponse = responses[2].data
+          dispatch(shipsIndAISSuccess(AisResponse))
+          const SmhVisitsResponse = responses[3].data
+          dispatch(shipsIndSmhVisitsSuccess(SmhVisitsResponse))
+          const SmhGapsResponse = responses[4].data
+          dispatch(shipsIndSmhGapsSuccess(SmhGapsResponse))
+          const portVisitsResponse = responses[5].data
+          dispatch(shipsIndPortVisitsSuccess(portVisitsResponse))
+        })
+      )
+      .catch((errors) => {
+        dispatch(shipsIndMmsiHistoryFailure(errors.message))
+        dispatch(shipsIndPortIspecFailure(errors.message))
+        dispatch(shipsIndAISFailure(errors.message))
+        dispatch(shipsIndSmhVisitsFailure(errors.message))
+        dispatch(shipsIndSmhGapsFailure(errors.message))
+        dispatch(shipsIndPortVisitsFailure(errors.message))
+
       })
   }
 }

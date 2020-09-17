@@ -20,7 +20,11 @@ export const subsFailure = (error) => {
 }
 
 export const getSubs = (id) => {
-  let url = process.env.REACT_APP_LOCALHOST + 'subs/' + id
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = host + 'subs/' + id
   console.log(url)
   const options = {
     method: 'GET',

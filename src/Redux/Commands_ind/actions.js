@@ -20,7 +20,11 @@ export const commandsFailure = (error) => {
 }
 
 export const getCommands = (id) => {
-  let url = process.env.REACT_APP_LOCALHOST + 'commands/' + id
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = host + 'commands/' + id
   console.log(url)
   const options = {
     method: 'GET',

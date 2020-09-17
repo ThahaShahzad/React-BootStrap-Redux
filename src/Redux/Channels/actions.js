@@ -20,7 +20,11 @@ export const channelsFailure = (error) => {
 }
 
 export const getChannels = () => {
-  let url = process.env.REACT_APP_LOCALHOST + 'channels'
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = host + 'channels'
   console.log(url)
   const options = {
     method: 'GET',

@@ -20,7 +20,11 @@ export const shipsFailure = (error) => {
 }
 
 export const getShips = () => {
-  let url = process.env.REACT_APP_LOCALHOST + 'ship_filters'
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = host + 'ship_filters'
   console.log(url)
   const options = {
     method: 'GET',

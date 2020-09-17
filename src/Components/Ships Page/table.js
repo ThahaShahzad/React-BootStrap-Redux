@@ -1,14 +1,17 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getShipsIndData, getShipsInd } from '../../Redux/Ships_ind/actions'
+import { getShipsInd } from '../../Redux/Ships_ind/actions'
 import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
 import Loader from 'react-loader-spinner'
 import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+
 
 function ShipsTable({ itemsPerPage, url }) {
   const ships_ind = useSelector((state) => state.ships_ind)
   const dispatch = useDispatch()
+  let history = useHistory()
   const table_data = React.useMemo(
     () =>
       ships_ind.loaded &&
@@ -17,8 +20,11 @@ function ShipsTable({ itemsPerPage, url }) {
           <Link
             key={index}
             onClick={() => {
+                //ships_ind_reducer()
                 dispatch(getShipsInd(`&imo_id=${val.imo_id}`))
-                dispatch(getShipsIndData(val.imo_id))
+                //dispatch(getShipsIndData(val.imo_id))
+                history.push(`/shipAdmin/imo=${val.imo_id}`)
+                window.location.reload(false);
             }
             }
             to={`/shipAdmin/imo=${val.imo_id}`}>

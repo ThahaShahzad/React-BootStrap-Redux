@@ -33,7 +33,7 @@ function Header() {
             <Link className='text-light nav-link' to='/searchchannels'>
               Channels
             </Link>
-            <Link className='text-light nav-link' to='/searchenpoints'>
+            <Link className='text-light nav-link' to='/searchendpoints'>
               Endpoints
             </Link>
              <span className='text-light align-middle'> == </span>

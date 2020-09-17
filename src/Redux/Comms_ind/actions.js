@@ -20,7 +20,11 @@ export const commsIndFailure = (error) => {
 }
 
 export const getCommsInd = (params) => {
-  let url = `${process.env.REACT_APP_LOCALHOST}bi/?path=api/v1/communicators/${params}`
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = `${host}bi/?path=api/v1/communicators/${params}`
   const options = {
     method: 'GET',
     url: url

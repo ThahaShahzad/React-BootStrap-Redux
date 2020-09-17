@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import MyCard from '../Reuseable/my_card'
 import { useForm, FormContext } from 'react-hook-form'
 import { Form, Row, Col, Button } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
+//import { useHistory } from 'react-router-dom'
 import MyInput from '../Reuseable/my_input'
 import { getShipsInd } from '../../Redux/Ships_ind/actions'
 import * as yup from 'yup'
@@ -17,7 +17,8 @@ function SearchIndShipCard() {
   const [showTable, setshowTable] = React.useState(false)
   const { handleSubmit, errors } = ind_ship_form
   const [url, setUrl] = React.useState()
-  let history = useHistory()
+  //let history = useHistory()
+  //console.log(history)
   let itemsPerPage = 100
   const onSubmit = (form_data) => {
 
@@ -55,7 +56,7 @@ function SearchIndShipCard() {
                   placeholder='Search Ships'
                   name='ship'
                   input_type='text'
-                  autoComplete='off'
+                  autoComplete='on'
                   rows='1'
                 />
                 {errors.ship && <p className='text-danger'>Search Field Is Required</p>}

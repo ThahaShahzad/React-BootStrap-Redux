@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Error() {
-  return <>Error 404</>
+    return <><h1>Under Development!</h1></>
 }
 
 export default Error

@@ -4,7 +4,7 @@ import MyTable, { SelectColumnFilter } from '../Reuseable/my_table'
 import { Container } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 
-function EnpointsTablePage() {
+function EndpointsTablePage() {
   const endpoints_data = useSelector((state) => state.endpoints.data)
   const endpoints_loaded = useSelector((state) => state.endpoints.loaded)
   const endpoints_loading = useSelector((state) => state.endpoints.isloading)
@@ -68,4 +68,4 @@ function EnpointsTablePage() {
   )
 }
 
-export default EnpointsTablePage
+export default EndpointsTablePage

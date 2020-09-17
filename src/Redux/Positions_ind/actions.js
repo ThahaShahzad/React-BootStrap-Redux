@@ -20,7 +20,11 @@ export const positionsFailure = (error) => {
 }
 
 export const getPositions = (id) => {
-  let url = process.env.REACT_APP_LOCALHOST + 'positions/' + id
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = host + 'positions/' + id
   console.log(url)
   const options = {
     method: 'GET',

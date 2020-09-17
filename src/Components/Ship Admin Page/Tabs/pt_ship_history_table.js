@@ -1,5 +1,5 @@
 import React from 'react'
-import MyTable, {SelectColumnFilter} from '../../Reuseable/my_table'
+import MyTable from '../../Reuseable/my_table'
 import { Container } from 'react-bootstrap'
 import { isEmpty } from '../../Reuseable/utils'
 

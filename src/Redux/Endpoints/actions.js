@@ -20,7 +20,11 @@ export const endpointsFailure = (error) => {
 }
 
 export const getEndpoints = () => {
-  let url = process.env.REACT_APP_LOCALHOST + 'endpoints'
+  let host = process.env.REACT_APP_LOCALHOST
+  if (process.env.NODE_ENV==='production') {
+      host = process.env.REACT_APP_LOCALHOST_BI
+  }
+  let url = host + 'endpoints'
   console.log(url)
   const options = {
     method: 'GET',
